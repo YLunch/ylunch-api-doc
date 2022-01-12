@@ -1,0 +1,97 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "Simple Inventory API",
+    "description" : "This is a simple API",
+    "contact" : {
+      "email" : "rael.calitro@ynov.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://virtserver.swaggerhub.com/rael06/ylunch-api/1.0.0",
+    "description" : "SwaggerHub API Auto Mocking"
+  } ],
+  "tags" : [ {
+    "name" : "users",
+    "description" : "users endpoints"
+  } ],
+  "paths" : {
+    "/users" : {
+      "post" : {
+        "tags" : [ "users" ],
+        "summary" : "Restaurant owner registration",
+        "operationId" : "addUser",
+        "parameters" : [ {
+          "name" : "type",
+          "in" : "query",
+          "description" : "One of `restaurantOwner`, `customer`, `superAdmin`",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Restaurant owner to register",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/RestaurantOwnerCreateDto"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "restaurant owner created"
+          },
+          "400" : {
+            "description" : "invalid input, object invalid"
+          },
+          "409" : {
+            "description" : "an existing item already exists"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "RestaurantOwnerCreateDto" : {
+        "required" : [ "email", "firstname", "lastname", "password", "phone" ],
+        "type" : "object",
+        "properties" : {
+          "email" : {
+            "type" : "string",
+            "format" : "email",
+            "example" : "owner@restaurant.com"
+          },
+          "firstname" : {
+            "type" : "string",
+            "example" : "Jean"
+          },
+          "lastname" : {
+            "type" : "string",
+            "example" : "Dupont"
+          },
+          "phone" : {
+            "type" : "string",
+            "format" : "phone",
+            "example" : "0612345678"
+          },
+          "password" : {
+            "type" : "string",
+            "format" : "password",
+            "example" : "Password1234."
+          }
+        }
+      }
+    }
+  }
+}
