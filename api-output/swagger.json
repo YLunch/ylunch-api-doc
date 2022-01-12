@@ -29,7 +29,7 @@
         "parameters" : [ {
           "name" : "role",
           "in" : "query",
-          "description" : "One of `restaurantOwner`, `customer`, `superAdmin`",
+          "description" : "One of `RestaurantOwner`, `Customer`, `SuperAdmin`",
           "required" : true,
           "style" : "form",
           "explode" : true,
@@ -38,22 +38,22 @@
           }
         } ],
         "requestBody" : {
-          "description" : "Restaurant owner to register",
+          "description" : "User to register",
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/RestaurantOwnerCreateDto"
+                "$ref" : "#/components/schemas/UserCreateDto"
               }
             }
           }
         },
         "responses" : {
           "201" : {
-            "description" : "restaurant owner created",
+            "description" : "user created",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/RestaurantOwnerReadDto"
+                  "$ref" : "#/components/schemas/UserReadDto"
                 }
               }
             }
@@ -62,7 +62,7 @@
             "description" : "invalid input, object invalid"
           },
           "409" : {
-            "description" : "an existing item already exists"
+            "description" : "an existing user already exists"
           }
         }
       }
@@ -70,7 +70,7 @@
   },
   "components" : {
     "schemas" : {
-      "RestaurantOwnerCreateDto" : {
+      "UserCreateDto" : {
         "required" : [ "email", "firstname", "lastname", "password", "phoneNumber" ],
         "type" : "object",
         "properties" : {
@@ -99,7 +99,7 @@
           }
         }
       },
-      "RestaurantOwnerReadDto" : {
+      "UserReadDto" : {
         "type" : "object",
         "properties" : {
           "link" : {
@@ -113,7 +113,7 @@
           "email" : {
             "type" : "string",
             "format" : "email",
-            "example" : "owner@restaurant.com"
+            "example" : "user@domain.com"
           },
           "firstname" : {
             "type" : "string",
