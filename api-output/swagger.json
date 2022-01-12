@@ -21,22 +21,11 @@
     "description" : "users endpoints"
   } ],
   "paths" : {
-    "/users" : {
+    "/restaurant-admins" : {
       "post" : {
         "tags" : [ "users" ],
         "summary" : "Restaurant owner registration",
-        "operationId" : "addUser",
-        "parameters" : [ {
-          "name" : "role",
-          "in" : "query",
-          "description" : "One of `RestaurantOwner`, `Customer`, `SuperAdmin`",
-          "required" : true,
-          "style" : "form",
-          "explode" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
+        "operationId" : "addRestaurantOwner",
         "requestBody" : {
           "description" : "User to register",
           "content" : {
@@ -62,7 +51,42 @@
             "description" : "invalid input, object invalid"
           },
           "409" : {
-            "description" : "an existing user already exists"
+            "description" : "User already exists"
+          }
+        }
+      }
+    },
+    "/customers" : {
+      "post" : {
+        "tags" : [ "users" ],
+        "summary" : "Customer registration",
+        "operationId" : "addCustomer",
+        "requestBody" : {
+          "description" : "User to register",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UserCreateDto"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "user created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UserReadDto"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "invalid input, object invalid"
+          },
+          "409" : {
+            "description" : "User already exists"
           }
         }
       }
@@ -127,6 +151,13 @@
             "type" : "string",
             "format" : "phone",
             "example" : "0612345678"
+          },
+          "roles" : {
+            "type" : "array",
+            "example" : [ "RestaurantAdmin" ],
+            "items" : {
+              "type" : "string"
+            }
           }
         }
       }
