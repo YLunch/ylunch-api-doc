@@ -64,7 +64,7 @@
   "components" : {
     "schemas" : {
       "RestaurantOwnerCreateDto" : {
-        "required" : [ "email", "firstname", "lastname", "password", "phone" ],
+        "required" : [ "email", "firstname", "lastname", "password", "phoneNumber" ],
         "type" : "object",
         "properties" : {
           "email" : {
@@ -80,7 +80,7 @@
             "type" : "string",
             "example" : "Dupont"
           },
-          "phone" : {
+          "phoneNumber" : {
             "type" : "string",
             "format" : "phone",
             "example" : "0612345678"
