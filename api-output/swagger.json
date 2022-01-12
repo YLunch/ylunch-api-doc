@@ -27,7 +27,7 @@
         "summary" : "Restaurant owner registration",
         "operationId" : "addUser",
         "parameters" : [ {
-          "name" : "type",
+          "name" : "role",
           "in" : "query",
           "description" : "One of `restaurantOwner`, `customer`, `superAdmin`",
           "required" : true,
