@@ -24,8 +24,8 @@
     "/restaurant-admins" : {
       "post" : {
         "tags" : [ "users" ],
-        "summary" : "Restaurant owner registration",
-        "operationId" : "addRestaurantOwner",
+        "summary" : "Restaurant admin registration",
+        "operationId" : "addRestaurantAdmin",
         "requestBody" : {
           "description" : "User to register",
           "content" : {
