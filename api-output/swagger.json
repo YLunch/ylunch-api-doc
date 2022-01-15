@@ -15,12 +15,46 @@
   "servers" : [ {
     "url" : "https://virtserver.swaggerhub.com/rael06/ylunch-api/1.0.0",
     "description" : "SwaggerHub API Auto Mocking"
+  }, {
+    "url" : "https://ylunch-api.rael-calitro.ovh",
+    "description" : "Online server"
+  }, {
+    "url" : "http://localhost:5254",
+    "description" : "Local server"
+  } ],
+  "security" : [ {
+    "Bearer" : [ ]
   } ],
   "tags" : [ {
+    "name" : "trials",
+    "description" : "Operations available to try the api"
+  }, {
     "name" : "users",
     "description" : "users endpoints"
   } ],
   "paths" : {
+    "/trials/anonymous" : {
+      "get" : {
+        "tags" : [ "trials" ],
+        "summary" : "Tries the api as anonymous",
+        "operationId" : "getAnonymousTry",
+        "responses" : {
+          "200" : {
+            "description" : "Success:\n- The anonymous trial Json object\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AnonymousTrialDto"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request:\n- Something went wrong, please try again later\n"
+          }
+        }
+      }
+    },
     "/restaurant-admins" : {
       "post" : {
         "tags" : [ "users" ],
@@ -94,6 +128,14 @@
   },
   "components" : {
     "schemas" : {
+      "AnonymousTrialDto" : {
+        "properties" : {
+          "message" : {
+            "type" : "string",
+            "description" : "DiscordApi is running, you are anonymous"
+          }
+        }
+      },
       "UserCreateDto" : {
         "required" : [ "email", "firstname", "lastname", "password", "phoneNumber" ],
         "type" : "object",
@@ -160,6 +202,13 @@
             }
           }
         }
+      }
+    },
+    "securitySchemes" : {
+      "Bearer" : {
+        "type" : "http",
+        "description" : "JWT Authorization header using the Bearer scheme. Example: \\\"Authorization: Bearer {token}\\\"\",\n",
+        "scheme" : "bearer"
       }
     }
   }
