@@ -63,7 +63,7 @@
       "get" : {
         "tags" : [ "trials" ],
         "summary" : "Tries the api as authenticated based on accessToken in headers",
-        "description" : "- Authorization header: **yes**\n- Granted roles: \n  - RestaurantAdmin\n  - Customer\n",
+        "description" : "- Authorization header: **yes**\n- Granted roles: \n  - All\n",
         "operationId" : "getAuthenticatedTry",
         "responses" : {
           "200" : {
@@ -221,7 +221,7 @@
       "get" : {
         "tags" : [ "authentication" ],
         "summary" : "Gets the current user based on the access token in headers",
-        "description" : "- Authorization header: **yes**\n- Granted roles: \n  - RestaurantAdmin\n  - Customer\n",
+        "description" : "- Authorization header: **yes**\n- Granted roles: \n  - All\n",
         "operationId" : "getCurrentUser",
         "responses" : {
           "200" : {
