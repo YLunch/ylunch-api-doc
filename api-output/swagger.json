@@ -335,17 +335,16 @@
         }
       },
       "LoginRequestDto" : {
-        "required" : [ "password", "userName" ],
+        "required" : [ "email", "password" ],
         "type" : "object",
         "properties" : {
-          "userName" : {
+          "email" : {
             "type" : "string",
-            "description" : "cannot be empty",
-            "example" : "my-pseudo"
+            "format" : "email",
+            "example" : "anne-marie.martin@ynov.com"
           },
           "password" : {
             "type" : "string",
-            "description" : "cannot be empty",
             "example" : "Password1234."
           }
         }
@@ -384,20 +383,20 @@
           "email" : {
             "type" : "string",
             "format" : "email",
-            "example" : "owner@restaurant.com"
+            "example" : "anne-marie.martin@ynov.com"
           },
           "firstname" : {
             "type" : "string",
-            "example" : "Jean"
+            "example" : "Anne-Marie"
           },
           "lastname" : {
             "type" : "string",
-            "example" : "Dupont"
+            "example" : "Martin-Jacques"
           },
           "phoneNumber" : {
             "type" : "string",
             "format" : "phone",
-            "example" : "0612345678"
+            "example" : "0687654321"
           },
           "password" : {
             "type" : "string",
@@ -424,16 +423,16 @@
           },
           "firstname" : {
             "type" : "string",
-            "example" : "Jean"
+            "example" : "Anne-Marie"
           },
           "lastname" : {
             "type" : "string",
-            "example" : "Dupont"
+            "example" : "Martin-Jacques"
           },
           "phoneNumber" : {
             "type" : "string",
             "format" : "phone",
-            "example" : "0612345678"
+            "example" : "0687654321"
           },
           "roles" : {
             "type" : "array",
