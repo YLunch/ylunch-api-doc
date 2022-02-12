@@ -40,6 +40,7 @@
       "get" : {
         "tags" : [ "trials" ],
         "summary" : "Tries the api as anonymous",
+        "description" : "- Authorization header: **no**\n",
         "operationId" : "getAnonymousTry",
         "responses" : {
           "200" : {
@@ -47,7 +48,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/AnonymousTrialDto"
+                  "$ref" : "#/components/schemas/AnonymousTryDto"
                 }
               }
             }
@@ -58,10 +59,95 @@
         }
       }
     },
+    "/trials/authenticated" : {
+      "get" : {
+        "tags" : [ "trials" ],
+        "summary" : "Tries the api as authenticated based on accessToken in headers",
+        "description" : "- Authorization header: **yes**\n- Granted roles: \n  - RestaurantAdmin\n  - Customer\n",
+        "operationId" : "getAuthenticatedTry",
+        "responses" : {
+          "200" : {
+            "description" : "Success:\n- The authenticated trial Json object\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AuthenticatedTryDto"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request:\n- Something went wrong, please try again later\n"
+          },
+          "401" : {
+            "description" : "Unauthorized:\n- Please login and use provided tokens\n"
+          }
+        }
+      }
+    },
+    "/trials/authenticated-customer" : {
+      "get" : {
+        "tags" : [ "trials" ],
+        "summary" : "Tries the api as authenticated based on accessToken in headers",
+        "description" : "- Authorization header: **yes**\n- Granted roles: \n  - Customer\n",
+        "operationId" : "getAuthenticatedCustomerTry",
+        "responses" : {
+          "200" : {
+            "description" : "Success:\n- The authenticated trial Json object\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AuthenticatedTryDto"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request:\n- Something went wrong, please try again later\n"
+          },
+          "401" : {
+            "description" : "Unauthorized:\n- Please login and use provided tokens\n"
+          },
+          "403" : {
+            "description" : "Forbidden:\n- User has not granted roles\n"
+          }
+        }
+      }
+    },
+    "/trials/authenticated-restaurant-admin" : {
+      "get" : {
+        "tags" : [ "trials" ],
+        "summary" : "Tries the api as authenticated based on accessToken in headers",
+        "description" : "- Authorization header: **yes**\n- Granted roles: \n  - RestaurantAdmin\n",
+        "operationId" : "getAuthenticatedRestaurantAdminTry",
+        "responses" : {
+          "200" : {
+            "description" : "Success:\n- The authenticated trial Json object\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AuthenticatedTryDto"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request:\n- Something went wrong, please try again later\n"
+          },
+          "401" : {
+            "description" : "Unauthorized:\n- Please login and use provided tokens\n"
+          },
+          "403" : {
+            "description" : "Forbidden:\n- User has not granted roles\n"
+          }
+        }
+      }
+    },
     "/authentication/login" : {
       "post" : {
         "tags" : [ "authentication" ],
         "summary" : "Login a user and returns access and refresh tokens as Json Web Token",
+        "description" : "- Authorization header: **no**\n",
         "operationId" : "login",
         "requestBody" : {
           "description" : "A JSON object that contains the user name and password",
@@ -94,10 +180,74 @@
         }
       }
     },
+    "/authentication/refresh-tokens" : {
+      "post" : {
+        "tags" : [ "authentication" ],
+        "summary" : "Refresh user's tokens and returns access and refresh tokens as Json Web Token",
+        "description" : "- Authorization header: **no**\n",
+        "operationId" : "refreshTokens",
+        "requestBody" : {
+          "description" : "A JSON object that contains the access and refresh tokens",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/TokenUpdateDto"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success:\n- The new access and refresh tokens\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TokenReadDto"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request:\n- Something went wrong, please try again later\n- invalid input, object invalid\n"
+          },
+          "401" : {
+            "description" : "Unauthorized:\n- Please login and use provided tokens\n"
+          }
+        }
+      }
+    },
+    "/authentication/current-user" : {
+      "get" : {
+        "tags" : [ "authentication" ],
+        "summary" : "Gets the current user based on the access token in headers",
+        "description" : "- Authorization header: **yes**\n- Granted roles: \n  - RestaurantAdmin\n  - Customer\n",
+        "operationId" : "getCurrentUser",
+        "responses" : {
+          "200" : {
+            "description" : "Success:\n- The current user Json object\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UserReadDto"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request:\n- Something went wrong, please try again later\n"
+          },
+          "401" : {
+            "description" : "Unauthorized:\n- Please login and use provided tokens\n"
+          }
+        }
+      }
+    },
     "/restaurant-admins" : {
       "post" : {
         "tags" : [ "users" ],
         "summary" : "Restaurant admin registration",
+        "description" : "- Authorization header: **no**\n",
         "operationId" : "addRestaurantAdmin",
         "requestBody" : {
           "description" : "User to register",
@@ -133,6 +283,7 @@
       "post" : {
         "tags" : [ "users" ],
         "summary" : "Customer registration",
+        "description" : "- Authorization header: **no**\n",
         "operationId" : "addCustomer",
         "requestBody" : {
           "description" : "User to register",
@@ -167,11 +318,19 @@
   },
   "components" : {
     "schemas" : {
-      "AnonymousTrialDto" : {
+      "AnonymousTryDto" : {
         "properties" : {
           "message" : {
             "type" : "string",
-            "description" : "DiscordApi is running, you are anonymous"
+            "description" : "YLunchApi is running, you are anonymous"
+          }
+        }
+      },
+      "AuthenticatedTryDto" : {
+        "properties" : {
+          "message" : {
+            "type" : "string",
+            "description" : "YLunchApi is running, you are authenticated as {CurrentUserEmail} with Id: {CurrentUserId} and Roles: {CurrentUserRoles}\n"
           }
         }
       },
@@ -192,6 +351,20 @@
         }
       },
       "TokenReadDto" : {
+        "type" : "object",
+        "properties" : {
+          "accessToken" : {
+            "type" : "string",
+            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6ImFlNTcxOGJkLWY5NzktNDQ1Ni04MmRlLTBjNzgzMzk4NzYzNCIsImp0aSI6IjBjZjc3NGYwLTUxYWQtNDM4Yi1hNTZlLTI1N2VlZGRhMjQ0MCIsIm5iZiI6MTY0MTEzNzMxMCwiZXhwIjoxNjQxMTU4OTEwLCJpYXQiOjE2NDExMzczMTB9.q1VaAodjovu79AyBNbrSxu4yZ4vOlDZQF2IyDvcsbJM\n"
+          },
+          "refreshToken" : {
+            "type" : "string",
+            "example" : "abcdefghij-a00000e0-aaa0-000a-0000-00e00aa00e00"
+          }
+        }
+      },
+      "TokenUpdateDto" : {
+        "required" : [ "accessToken", "refreshToken" ],
         "type" : "object",
         "properties" : {
           "accessToken" : {
@@ -275,7 +448,7 @@
     "securitySchemes" : {
       "Bearer" : {
         "type" : "http",
-        "description" : "JWT Authorization header using the Bearer scheme. Example: \\\"Authorization: Bearer {token}\\\"\",\n",
+        "description" : "JWT Authorization header using the Bearer scheme. Example: 'Authorization: Bearer {token}',\n",
         "scheme" : "bearer"
       }
     }
