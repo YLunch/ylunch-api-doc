@@ -34,6 +34,9 @@
   }, {
     "name" : "users",
     "description" : "users endpoints"
+  }, {
+    "name" : "restaurants",
+    "description" : "restaurants endpoints"
   } ],
   "paths" : {
     "/trials/anonymous" : {
@@ -155,6 +158,20 @@
             "application/json" : {
               "schema" : {
                 "$ref" : "#/components/schemas/LoginRequestDto"
+              },
+              "examples" : {
+                "restaurantAdmin" : {
+                  "value" : {
+                    "email" : "admin@restaurant.com",
+                    "password" : "Password1234."
+                  }
+                },
+                "customer" : {
+                  "value" : {
+                    "email" : "anne-marie.martin@ynov.com",
+                    "password" : "Password1234."
+                  }
+                }
               }
             }
           },
@@ -314,6 +331,82 @@
           }
         }
       }
+    },
+    "/restaurants" : {
+      "post" : {
+        "tags" : [ "restaurants" ],
+        "summary" : "Restaurant creation",
+        "description" : "- Authorization header: **yes**\n- Granted roles:\n  - RestaurantAdmin\n",
+        "operationId" : "addRestaurant",
+        "requestBody" : {
+          "description" : "Restaurant to create",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/RestaurantCreateDto"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "restaurant created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RestaurantReadDto"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "invalid input, object invalid"
+          },
+          "409" : {
+            "description" : "Restaurant already exists"
+          }
+        }
+      }
+    },
+    "/restaurants/{restaurantId}" : {
+      "description" : "- Authorization header: **yes**\n- Granted roles:\n  - All\n",
+      "get" : {
+        "tags" : [ "restaurants" ],
+        "summary" : "Gets a restaurant by id",
+        "operationId" : "getRestaurantById",
+        "parameters" : [ {
+          "name" : "restaurantId",
+          "in" : "path",
+          "description" : "The id of the restaurant you want to get",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success:\n- The restaurant\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RestaurantReadDto"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request:\n- Something went wrong, please try again later\n"
+          },
+          "401" : {
+            "description" : "Unauthorized:\n- Please login and use provided tokens\n"
+          },
+          "404" : {
+            "description" : "Not found:\n- Restaurant not found\n"
+          }
+        }
+      }
     }
   },
   "components" : {
@@ -465,6 +558,254 @@
             "items" : {
               "type" : "string"
             }
+          }
+        }
+      },
+      "ClosingDateCreateDto" : {
+        "required" : [ "closingDateTime" ],
+        "type" : "object",
+        "properties" : {
+          "closingDateTime" : {
+            "type" : "string",
+            "example" : "2021-12-31T00:00:00.000000"
+          }
+        }
+      },
+      "ClosingDateReadDto" : {
+        "type" : "object",
+        "properties" : {
+          "closingDateTime" : {
+            "type" : "string",
+            "example" : "2021-12-31T00:00:00.000000"
+          }
+        }
+      },
+      "OpeningTimeCreateDto" : {
+        "required" : [ "dayOfWeek", "offsetOpenMinutes", "openMinutes" ],
+        "type" : "object",
+        "properties" : {
+          "dayOfWeek" : {
+            "type" : "number",
+            "description" : "The day to apply this opening time. Starting from Sunday: 0 to Saturday: 6, for example 4 is thursday",
+            "example" : 4
+          },
+          "offsetOpenMinutes" : {
+            "type" : "number",
+            "description" : "Number of minutes past from 00:00 for example 10:00 is 600, which means the restaurant is open since 10:00",
+            "example" : 600
+          },
+          "openMinutes" : {
+            "type" : "number",
+            "description" : "Number of minutes the restaurant is open since the offset, for example 120 minutes, which means the restaurant is open during 2h since 10:00",
+            "example" : 120
+          }
+        }
+      },
+      "OpeningTimeReadDto" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "restaurantId" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "dayOfWeek" : {
+            "type" : "number",
+            "description" : "The day to apply this opening time. Starting from Sunday: 0 to Saturday: 6, for example 4 is thursday",
+            "example" : 4
+          },
+          "offsetOpenMinutes" : {
+            "type" : "number",
+            "description" : "Number of minutes past from 00:00 for example 10:00 is 600, which means the restaurant is open since 10:00",
+            "example" : 600
+          },
+          "openMinutes" : {
+            "type" : "number",
+            "description" : "Number of minutes the restaurant is open since the offset, for example 120 minutes, which means the restaurant is open during 2h since 10:00",
+            "example" : 120
+          }
+        }
+      },
+      "RestaurantCreateDto" : {
+        "required" : [ "city", "country", "email", "isOpen", "isPublic", "name", "phoneNumber", "streetName", "streetNumber", "zipCode" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "example" : "my restaurant"
+          },
+          "phoneNumber" : {
+            "type" : "string",
+            "format" : "phone",
+            "example" : "0612345678"
+          },
+          "email" : {
+            "type" : "string",
+            "format" : "email",
+            "example" : "my.restaurant@restaurant.com"
+          },
+          "isOpen" : {
+            "type" : "boolean",
+            "description" : "Boolean to set manually if the restaurant is open or not:\n- `False`: the restaurant will be set as closed regardless of closing dates and opening times\n- `True`: the restaurant will be set as open regarding closing dates and opening times\n",
+            "example" : true
+          },
+          "isPublic" : {
+            "type" : "boolean",
+            "description" : "True if the restaurant wants to be visible for customers, actual visibility value is `isPublished` (refer to that field in `RestaurantReadDto`for details)",
+            "example" : true
+          },
+          "zipCode" : {
+            "type" : "string",
+            "example" : "06560"
+          },
+          "country" : {
+            "type" : "string",
+            "example" : "France"
+          },
+          "city" : {
+            "type" : "string",
+            "example" : "Valbonne"
+          },
+          "streetNumber" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "streetName" : {
+            "type" : "string",
+            "example" : "Place Sophie Lafitte"
+          },
+          "addressExtraInformation" : {
+            "type" : "string",
+            "example" : "Bât. G"
+          },
+          "closingDates" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ClosingDateCreateDto"
+            }
+          },
+          "placeOpeningTimes" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/OpeningTimeCreateDto"
+            }
+          },
+          "orderOpeningTimes" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/OpeningTimeCreateDto"
+            }
+          },
+          "base64Image" : {
+            "type" : "string",
+            "description" : "Base 64 encoded image",
+            "example" : "data:image/png;base64,iVBORw0KGgoAAA..."
+          },
+          "base64Logo" : {
+            "type" : "string",
+            "description" : "Base 64 encoded logo",
+            "example" : "data:image/png;base64,iVBORw0KGgoAAA..."
+          }
+        }
+      },
+      "RestaurantReadDto" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "my restaurant"
+          },
+          "phoneNumber" : {
+            "type" : "string",
+            "format" : "phone",
+            "example" : "0612345678"
+          },
+          "email" : {
+            "type" : "string",
+            "format" : "email",
+            "example" : "my.restaurant@restaurant.com"
+          },
+          "isOpen" : {
+            "type" : "boolean",
+            "description" : "Boolean to set manually if the restaurant is open or not:\n- `False`: the restaurant will be set as closed regardless of closing dates and opening times\n- `True`: the restaurant will be set as open regarding closing dates and opening times\n",
+            "example" : true
+          },
+          "isPublic" : {
+            "type" : "boolean",
+            "description" : "True if the restaurant wants to be visible for customers, actual display value is `isPublished` (refer to that field for details)",
+            "example" : true
+          },
+          "zipCode" : {
+            "type" : "string",
+            "example" : "06560"
+          },
+          "country" : {
+            "type" : "string",
+            "example" : "France"
+          },
+          "city" : {
+            "type" : "string",
+            "example" : "Valbonne"
+          },
+          "streetNumber" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "streetName" : {
+            "type" : "string",
+            "example" : "Place Sophie Lafitte"
+          },
+          "addressExtraInformation" : {
+            "type" : "string",
+            "example" : "Bât. G"
+          },
+          "closingDates" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ClosingDateReadDto"
+            }
+          },
+          "placeOpeningTimes" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/OpeningTimeReadDto"
+            }
+          },
+          "orderOpeningTimes" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/OpeningTimeReadDto"
+            }
+          },
+          "base64Image" : {
+            "type" : "string",
+            "description" : "Base 64 encoded image",
+            "example" : "data:image/png;base64,iVBORw0KGgoAAA..."
+          },
+          "base64Logo" : {
+            "type" : "string",
+            "description" : "Base 64 encoded logo",
+            "example" : "data:image/png;base64,iVBORw0KGgoAAA..."
+          },
+          "isPublished" : {
+            "type" : "boolean",
+            "description" : "This is true if the restaurant has a value for all the required fields of `RestaurantCreateDto` plus at least one opening time and one product which has isActive value set to true. If true, the restaurant is visible for customers",
+            "example" : true
+          },
+          "isCurrentlyOpenToOrder" : {
+            "type" : "boolean",
+            "description" : "True if the restaurant accepts orders"
+          },
+          "isCurrentlyOpenInPlace" : {
+            "type" : "boolean",
+            "description" : "True if the restaurant is open to eat in place"
           }
         }
       }
