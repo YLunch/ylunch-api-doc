@@ -415,7 +415,7 @@
         "properties" : {
           "message" : {
             "type" : "string",
-            "description" : "YLunchApi is running, you are anonymous"
+            "description" : "YLunchApi is running, you are anonymous."
           }
         }
       },
@@ -423,7 +423,7 @@
         "properties" : {
           "message" : {
             "type" : "string",
-            "description" : "YLunchApi is running, you are authenticated as {CurrentUserEmail} with Id: {CurrentUserId} and Roles: {CurrentUserRoles}\n"
+            "description" : "YLunchApi is running, you are authenticated as {CurrentUserEmail} with Id: {CurrentUserId} and Roles: {CurrentUserRoles}.\n"
           }
         }
       },
@@ -581,22 +581,22 @@
         }
       },
       "OpeningTimeCreateDto" : {
-        "required" : [ "dayOfWeek", "offsetOpenMinutes", "openMinutes" ],
+        "required" : [ "dayOfWeek", "durationInMinutes", "offsetInMinutes" ],
         "type" : "object",
         "properties" : {
           "dayOfWeek" : {
             "type" : "number",
-            "description" : "The day to apply this opening time. Starting from Sunday: 0 to Saturday: 6, for example 4 is thursday",
+            "description" : "The day to apply this opening time. Starting from Sunday: 0 to Saturday: 6, for example 4 is thursday.",
             "example" : 4
           },
-          "offsetOpenMinutes" : {
+          "OffsetInMinutes" : {
             "type" : "number",
-            "description" : "Number of minutes past from 00:00 for example 10:00 is 600, which means the restaurant is open since 10:00",
+            "description" : "Number of minutes past from 00:00 for example 10:00 is 600, which means the restaurant is open since 10:00.",
             "example" : 600
           },
-          "openMinutes" : {
+          "DurationInMinutes" : {
             "type" : "number",
-            "description" : "Number of minutes the restaurant is open since the offset, for example 120 minutes, which means the restaurant is open during 2h since 10:00",
+            "description" : "Number of minutes the restaurant is open since the offset, for example 120 minutes, which means the restaurant is open during 2h since 10:00.",
             "example" : 120
           }
         }
@@ -614,17 +614,17 @@
           },
           "dayOfWeek" : {
             "type" : "number",
-            "description" : "The day to apply this opening time. Starting from Sunday: 0 to Saturday: 6, for example 4 is thursday",
+            "description" : "The day to apply this opening time. Starting from Sunday: 0 to Saturday: 6, for example 4 is thursday.",
             "example" : 4
           },
-          "offsetOpenMinutes" : {
+          "OffsetInMinutes" : {
             "type" : "number",
-            "description" : "Number of minutes past from 00:00 for example 10:00 is 600, which means the restaurant is open since 10:00",
+            "description" : "Number of minutes past from 00:00 for example 10:00 is 600, which means the restaurant is open since 10:00.",
             "example" : 600
           },
-          "openMinutes" : {
+          "DurationInMinutes" : {
             "type" : "number",
-            "description" : "Number of minutes the restaurant is open since the offset, for example 120 minutes, which means the restaurant is open during 2h since 10:00",
+            "description" : "Number of minutes the restaurant is open since the offset, for example 120 minutes, which means the restaurant is open during 2h since 10:00.",
             "example" : 120
           }
         }
@@ -654,7 +654,7 @@
           },
           "isPublic" : {
             "type" : "boolean",
-            "description" : "True if the restaurant wants to be visible for customers, actual visibility value is `isPublished` (refer to that field in `RestaurantReadDto`for details)",
+            "description" : "True if the restaurant wants to be visible for customers, actual visibility value is `isPublished` (refer to that field in `RestaurantReadDto`for details).",
             "example" : true
           },
           "zipCode" : {
@@ -739,7 +739,7 @@
           },
           "isPublic" : {
             "type" : "boolean",
-            "description" : "True if the restaurant wants to be visible for customers, actual display value is `isPublished` (refer to that field for details)",
+            "description" : "True if the restaurant wants to be visible for customers, actual display value is `isPublished` (refer to that field for details).",
             "example" : true
           },
           "zipCode" : {
@@ -801,11 +801,11 @@
           },
           "isCurrentlyOpenToOrder" : {
             "type" : "boolean",
-            "description" : "True if the restaurant accepts orders"
+            "description" : "True if the restaurant accepts orders."
           },
           "isCurrentlyOpenInPlace" : {
             "type" : "boolean",
-            "description" : "True if the restaurant is open to eat in place"
+            "description" : "True if the restaurant is open to eat in place."
           }
         }
       }
@@ -813,7 +813,7 @@
     "securitySchemes" : {
       "Bearer" : {
         "type" : "http",
-        "description" : "JWT Authorization header using the Bearer scheme. Example: 'Authorization: Bearer {token}',\n",
+        "description" : "JWT Authorization header using the Bearer scheme. Example: 'Authorization: Bearer {token}'.\n",
         "scheme" : "bearer"
       }
     }
