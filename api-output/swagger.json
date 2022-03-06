@@ -423,7 +423,17 @@
             "description" : "invalid input, object invalid"
           },
           "409" : {
-            "description" : "User already exists"
+            "description" : "Conflict:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "example" : {
+                  "message" : "User already exists."
+                }
+              }
+            }
           }
         }
       }
@@ -459,7 +469,17 @@
             "description" : "invalid input, object invalid"
           },
           "409" : {
-            "description" : "User already exists"
+            "description" : "Conflict:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "example" : {
+                  "message" : "User already exists."
+                }
+              }
+            }
           }
         }
       }
@@ -495,7 +515,17 @@
             "description" : "invalid input, object invalid"
           },
           "409" : {
-            "description" : "Restaurant already exists"
+            "description" : "Conflict:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "example" : {
+                  "message" : "Restaurant already exists."
+                }
+              }
+            }
           }
         }
       }
@@ -555,7 +585,17 @@
             }
           },
           "404" : {
-            "description" : "Not found:\n- Restaurant not found\n"
+            "description" : "Not found:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "example" : {
+                  "message" : "Restaurant not found."
+                }
+              }
+            }
           }
         }
       }
