@@ -51,13 +51,26 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/AnonymousTryDto"
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "example" : {
+                  "message" : "YLunchApi is running, you are anonymous."
                 }
               }
             }
           },
           "400" : {
-            "description" : "Bad request:\n- Something went wrong, please try again later\n"
+            "description" : "Bad request:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "example" : {
+                  "message" : "Something went wrong, please try again later."
+                }
+              }
+            }
           }
         }
       }
@@ -74,16 +87,39 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/AuthenticatedTryDto"
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "example" : {
+                  "message" : "YLunchApi is running, you are authenticated as {CurrentUserEmail} with Id: {CurrentUserId} and Roles: {CurrentUserRoles}."
                 }
               }
             }
           },
           "400" : {
-            "description" : "Bad request:\n- Something went wrong, please try again later\n"
+            "description" : "Bad request:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "example" : {
+                  "message" : "Something went wrong, please try again later."
+                }
+              }
+            }
           },
           "401" : {
-            "description" : "Unauthorized:\n- Please login and use provided tokens\n"
+            "description" : "Unauthorized:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "example" : {
+                  "message" : "Please login and use provided tokens."
+                }
+              }
+            }
           }
         }
       }
@@ -100,16 +136,39 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/AuthenticatedTryDto"
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "example" : {
+                  "message" : "YLunchApi is running, you are authenticated as {CurrentUserEmail} with Id: {CurrentUserId} and Roles: {CurrentUserRoles}."
                 }
               }
             }
           },
           "400" : {
-            "description" : "Bad request:\n- Something went wrong, please try again later\n"
+            "description" : "Bad request:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "example" : {
+                  "message" : "Something went wrong, please try again later."
+                }
+              }
+            }
           },
           "401" : {
-            "description" : "Unauthorized:\n- Please login and use provided tokens\n"
+            "description" : "Unauthorized:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "example" : {
+                  "message" : "Please login and use provided tokens."
+                }
+              }
+            }
           },
           "403" : {
             "description" : "Forbidden:\n- User has not granted roles\n"
@@ -129,16 +188,39 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/AuthenticatedTryDto"
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "example" : {
+                  "message" : "YLunchApi is running, you are authenticated as {CurrentUserEmail} with Id: {CurrentUserId} and Roles: {CurrentUserRoles}."
                 }
               }
             }
           },
           "400" : {
-            "description" : "Bad request:\n- Something went wrong, please try again later\n"
+            "description" : "Bad request:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "example" : {
+                  "message" : "Something went wrong, please try again later."
+                }
+              }
+            }
           },
           "401" : {
-            "description" : "Unauthorized:\n- Please login and use provided tokens\n"
+            "description" : "Unauthorized:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "example" : {
+                  "message" : "Please login and use provided tokens."
+                }
+              }
+            }
           },
           "403" : {
             "description" : "Forbidden:\n- User has not granted roles\n"
@@ -189,10 +271,30 @@
             }
           },
           "400" : {
-            "description" : "Bad request:\n- Something went wrong, please try again later\n"
+            "description" : "Bad request:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "example" : {
+                  "message" : "Something went wrong, please try again later."
+                }
+              }
+            }
           },
           "401" : {
-            "description" : "Unauthorized:\n- Please login and use provided tokens\n"
+            "description" : "Unauthorized:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "example" : {
+                  "message" : "Please login and use provided tokens."
+                }
+              }
+            }
           }
         }
       }
@@ -226,10 +328,20 @@
             }
           },
           "400" : {
-            "description" : "Bad request:\n- Something went wrong, please try again later\n- invalid input, object invalid\n"
+            "description" : "Bad request:\n- Something went wrong, please try again later.\n- invalid input, object invalid\n"
           },
           "401" : {
-            "description" : "Unauthorized:\n- Please login and use provided tokens\n"
+            "description" : "Unauthorized:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "example" : {
+                  "message" : "Please login and use provided tokens."
+                }
+              }
+            }
           }
         }
       }
@@ -252,10 +364,30 @@
             }
           },
           "400" : {
-            "description" : "Bad request:\n- Something went wrong, please try again later\n"
+            "description" : "Bad request:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "example" : {
+                  "message" : "Something went wrong, please try again later."
+                }
+              }
+            }
           },
           "401" : {
-            "description" : "Unauthorized:\n- Please login and use provided tokens\n"
+            "description" : "Unauthorized:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "example" : {
+                  "message" : "Please login and use provided tokens."
+                }
+              }
+            }
           }
         }
       }
@@ -397,10 +529,30 @@
             }
           },
           "400" : {
-            "description" : "Bad request:\n- Something went wrong, please try again later\n"
+            "description" : "Bad request:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "example" : {
+                  "message" : "Something went wrong, please try again later."
+                }
+              }
+            }
           },
           "401" : {
-            "description" : "Unauthorized:\n- Please login and use provided tokens\n"
+            "description" : "Unauthorized:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "example" : {
+                  "message" : "Please login and use provided tokens."
+                }
+              }
+            }
           },
           "404" : {
             "description" : "Not found:\n- Restaurant not found\n"
@@ -411,19 +563,11 @@
   },
   "components" : {
     "schemas" : {
-      "AnonymousTryDto" : {
+      "MessageDto" : {
         "properties" : {
           "message" : {
             "type" : "string",
-            "description" : "YLunchApi is running, you are anonymous."
-          }
-        }
-      },
-      "AuthenticatedTryDto" : {
-        "properties" : {
-          "message" : {
-            "type" : "string",
-            "description" : "YLunchApi is running, you are authenticated as {CurrentUserEmail} with Id: {CurrentUserId} and Roles: {CurrentUserRoles}.\n"
+            "description" : "The message."
           }
         }
       },
