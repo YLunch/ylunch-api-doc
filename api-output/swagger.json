@@ -277,8 +277,23 @@
                 "schema" : {
                   "$ref" : "#/components/schemas/MessageDto"
                 },
-                "example" : {
-                  "message" : "Something went wrong, please try again later."
+                "examples" : {
+                  "Other" : {
+                    "value" : {
+                      "message" : "Something went wrong, please try again later."
+                    }
+                  },
+                  "ValidationError" : {
+                    "value" : {
+                      "type" : "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                      "title" : "One or more validation errors occurred.",
+                      "status" : 400,
+                      "traceId" : "00-9393a6db2a571eaf5be54665fe54611b-9b403c28dba47801-00",
+                      "errors" : {
+                        "Email" : [ "The Email field is required." ]
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -328,7 +343,32 @@
             }
           },
           "400" : {
-            "description" : "Bad request:\n- Something went wrong, please try again later.\n- invalid input, object invalid\n"
+            "description" : "Bad request:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "examples" : {
+                  "Other" : {
+                    "value" : {
+                      "message" : "Something went wrong, please try again later."
+                    }
+                  },
+                  "ValidationError" : {
+                    "value" : {
+                      "type" : "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                      "title" : "One or more validation errors occurred.",
+                      "status" : 400,
+                      "traceId" : "00-9393a6db2a571eaf5be54665fe54611b-9b403c28dba47801-00",
+                      "errors" : {
+                        "AccessToken" : [ "The AccessToken field is required." ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "401" : {
             "description" : "Unauthorized:\n",
@@ -420,7 +460,32 @@
             }
           },
           "400" : {
-            "description" : "invalid input, object invalid"
+            "description" : "Bad request:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "examples" : {
+                  "Other" : {
+                    "value" : {
+                      "message" : "Something went wrong, please try again later."
+                    }
+                  },
+                  "ValidationError" : {
+                    "value" : {
+                      "type" : "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                      "title" : "One or more validation errors occurred.",
+                      "status" : 400,
+                      "traceId" : "00-9393a6db2a571eaf5be54665fe54611b-9b403c28dba47801-00",
+                      "errors" : {
+                        "Name" : [ "The Name field is required." ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "409" : {
             "description" : "Conflict:\n",
@@ -466,7 +531,32 @@
             }
           },
           "400" : {
-            "description" : "invalid input, object invalid"
+            "description" : "Bad request:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "examples" : {
+                  "Other" : {
+                    "value" : {
+                      "message" : "Something went wrong, please try again later."
+                    }
+                  },
+                  "ValidationError" : {
+                    "value" : {
+                      "type" : "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                      "title" : "One or more validation errors occurred.",
+                      "status" : 400,
+                      "traceId" : "00-9393a6db2a571eaf5be54665fe54611b-9b403c28dba47801-00",
+                      "errors" : {
+                        "Name" : [ "The Name field is required." ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "409" : {
             "description" : "Conflict:\n",
@@ -512,7 +602,32 @@
             }
           },
           "400" : {
-            "description" : "invalid input, object invalid"
+            "description" : "Bad request:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "examples" : {
+                  "Other" : {
+                    "value" : {
+                      "message" : "Something went wrong, please try again later."
+                    }
+                  },
+                  "ValidationError" : {
+                    "value" : {
+                      "type" : "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                      "title" : "One or more validation errors occurred.",
+                      "status" : 400,
+                      "traceId" : "00-9393a6db2a571eaf5be54665fe54611b-9b403c28dba47801-00",
+                      "errors" : {
+                        "Name" : [ "The Name field is required." ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "409" : {
             "description" : "Conflict:\n",
