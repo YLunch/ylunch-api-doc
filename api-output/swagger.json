@@ -64,10 +64,14 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessageDto"
+                  "$ref" : "#/components/schemas/ErrorDto"
                 },
                 "example" : {
-                  "message" : "Something went wrong, please try again later."
+                  "title" : "BadRequest",
+                  "statusCode" : 400,
+                  "errors" : {
+                    "reasons" : [ "Something went wrong, please try again later." ]
+                  }
                 }
               }
             }
@@ -100,10 +104,14 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessageDto"
+                  "$ref" : "#/components/schemas/ErrorDto"
                 },
                 "example" : {
-                  "message" : "Something went wrong, please try again later."
+                  "title" : "BadRequest",
+                  "statusCode" : 400,
+                  "errors" : {
+                    "reasons" : [ "Something went wrong, please try again later." ]
+                  }
                 }
               }
             }
@@ -113,10 +121,14 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessageDto"
+                  "$ref" : "#/components/schemas/ErrorDto"
                 },
                 "example" : {
-                  "message" : "Please login and use provided tokens."
+                  "title" : "Unauthorized",
+                  "statusCode" : 401,
+                  "errors" : {
+                    "reasons" : [ "Please login and use provided tokens." ]
+                  }
                 }
               }
             }
@@ -149,10 +161,14 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessageDto"
+                  "$ref" : "#/components/schemas/ErrorDto"
                 },
                 "example" : {
-                  "message" : "Something went wrong, please try again later."
+                  "title" : "BadRequest",
+                  "statusCode" : 400,
+                  "errors" : {
+                    "reasons" : [ "Something went wrong, please try again later." ]
+                  }
                 }
               }
             }
@@ -162,10 +178,14 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessageDto"
+                  "$ref" : "#/components/schemas/ErrorDto"
                 },
                 "example" : {
-                  "message" : "Please login and use provided tokens."
+                  "title" : "Unauthorized",
+                  "statusCode" : 401,
+                  "errors" : {
+                    "reasons" : [ "Please login and use provided tokens." ]
+                  }
                 }
               }
             }
@@ -201,10 +221,14 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessageDto"
+                  "$ref" : "#/components/schemas/ErrorDto"
                 },
                 "example" : {
-                  "message" : "Something went wrong, please try again later."
+                  "title" : "BadRequest",
+                  "statusCode" : 400,
+                  "errors" : {
+                    "reasons" : [ "Something went wrong, please try again later." ]
+                  }
                 }
               }
             }
@@ -214,10 +238,14 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessageDto"
+                  "$ref" : "#/components/schemas/ErrorDto"
                 },
                 "example" : {
-                  "message" : "Please login and use provided tokens."
+                  "title" : "Unauthorized",
+                  "statusCode" : 401,
+                  "errors" : {
+                    "reasons" : [ "Please login and use provided tokens." ]
+                  }
                 }
               }
             }
@@ -280,14 +308,18 @@
                 "examples" : {
                   "Other" : {
                     "value" : {
-                      "message" : "Something went wrong, please try again later."
+                      "title" : "BadRequest",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "reasons" : [ "Something went wrong, please try again later." ]
+                      }
                     }
                   },
                   "ValidationError" : {
                     "value" : {
                       "type" : "https://tools.ietf.org/html/rfc7231#section-6.5.1",
                       "title" : "One or more validation errors occurred.",
-                      "status" : 400,
+                      "statusCode" : 400,
                       "traceId" : "00-9393a6db2a571eaf5be54665fe54611b-9b403c28dba47801-00",
                       "errors" : {
                         "Email" : [ "The Email field is required." ]
@@ -303,10 +335,14 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessageDto"
+                  "$ref" : "#/components/schemas/ErrorDto"
                 },
                 "example" : {
-                  "message" : "Please login and use provided tokens."
+                  "title" : "Unauthorized",
+                  "statusCode" : 401,
+                  "errors" : {
+                    "reasons" : [ "Please login and use provided tokens." ]
+                  }
                 }
               }
             }
@@ -352,14 +388,18 @@
                 "examples" : {
                   "Other" : {
                     "value" : {
-                      "message" : "Something went wrong, please try again later."
+                      "title" : "BadRequest",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "reasons" : [ "Something went wrong, please try again later." ]
+                      }
                     }
                   },
                   "ValidationError" : {
                     "value" : {
                       "type" : "https://tools.ietf.org/html/rfc7231#section-6.5.1",
                       "title" : "One or more validation errors occurred.",
-                      "status" : 400,
+                      "statusCode" : 400,
                       "traceId" : "00-9393a6db2a571eaf5be54665fe54611b-9b403c28dba47801-00",
                       "errors" : {
                         "AccessToken" : [ "The AccessToken field is required." ]
@@ -375,10 +415,14 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessageDto"
+                  "$ref" : "#/components/schemas/ErrorDto"
                 },
                 "example" : {
-                  "message" : "Please login and use provided tokens."
+                  "title" : "Unauthorized",
+                  "statusCode" : 401,
+                  "errors" : {
+                    "reasons" : [ "Please login and use provided tokens." ]
+                  }
                 }
               }
             }
@@ -408,10 +452,14 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessageDto"
+                  "$ref" : "#/components/schemas/ErrorDto"
                 },
                 "example" : {
-                  "message" : "Something went wrong, please try again later."
+                  "title" : "BadRequest",
+                  "statusCode" : 400,
+                  "errors" : {
+                    "reasons" : [ "Something went wrong, please try again later." ]
+                  }
                 }
               }
             }
@@ -421,10 +469,14 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessageDto"
+                  "$ref" : "#/components/schemas/ErrorDto"
                 },
                 "example" : {
-                  "message" : "Please login and use provided tokens."
+                  "title" : "Unauthorized",
+                  "statusCode" : 401,
+                  "errors" : {
+                    "reasons" : [ "Please login and use provided tokens." ]
+                  }
                 }
               }
             }
@@ -469,14 +521,18 @@
                 "examples" : {
                   "Other" : {
                     "value" : {
-                      "message" : "Something went wrong, please try again later."
+                      "title" : "BadRequest",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "reasons" : [ "Something went wrong, please try again later." ]
+                      }
                     }
                   },
                   "ValidationError" : {
                     "value" : {
                       "type" : "https://tools.ietf.org/html/rfc7231#section-6.5.1",
                       "title" : "One or more validation errors occurred.",
-                      "status" : 400,
+                      "statusCode" : 400,
                       "traceId" : "00-9393a6db2a571eaf5be54665fe54611b-9b403c28dba47801-00",
                       "errors" : {
                         "Name" : [ "The Name field is required." ]
@@ -492,10 +548,14 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessageDto"
+                  "$ref" : "#/components/schemas/ErrorDto"
                 },
                 "example" : {
-                  "message" : "User already exists."
+                  "title" : "Conflict",
+                  "statusCode" : 409,
+                  "errors" : {
+                    "reasons" : [ "User already exists." ]
+                  }
                 }
               }
             }
@@ -540,14 +600,18 @@
                 "examples" : {
                   "Other" : {
                     "value" : {
-                      "message" : "Something went wrong, please try again later."
+                      "title" : "BadRequest",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "reasons" : [ "Something went wrong, please try again later." ]
+                      }
                     }
                   },
                   "ValidationError" : {
                     "value" : {
                       "type" : "https://tools.ietf.org/html/rfc7231#section-6.5.1",
                       "title" : "One or more validation errors occurred.",
-                      "status" : 400,
+                      "statusCode" : 400,
                       "traceId" : "00-9393a6db2a571eaf5be54665fe54611b-9b403c28dba47801-00",
                       "errors" : {
                         "Name" : [ "The Name field is required." ]
@@ -563,10 +627,14 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessageDto"
+                  "$ref" : "#/components/schemas/ErrorDto"
                 },
                 "example" : {
-                  "message" : "User already exists."
+                  "title" : "Conflict",
+                  "statusCode" : 409,
+                  "errors" : {
+                    "reasons" : [ "User already exists." ]
+                  }
                 }
               }
             }
@@ -611,14 +679,18 @@
                 "examples" : {
                   "Other" : {
                     "value" : {
-                      "message" : "Something went wrong, please try again later."
+                      "title" : "BadRequest",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "reasons" : [ "Something went wrong, please try again later." ]
+                      }
                     }
                   },
                   "ValidationError" : {
                     "value" : {
                       "type" : "https://tools.ietf.org/html/rfc7231#section-6.5.1",
                       "title" : "One or more validation errors occurred.",
-                      "status" : 400,
+                      "statusCode" : 400,
                       "traceId" : "00-9393a6db2a571eaf5be54665fe54611b-9b403c28dba47801-00",
                       "errors" : {
                         "Name" : [ "The Name field is required." ]
@@ -634,10 +706,14 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessageDto"
+                  "$ref" : "#/components/schemas/ErrorDto"
                 },
                 "example" : {
-                  "message" : "Restaurant already exists."
+                  "title" : "Conflict",
+                  "statusCode" : 409,
+                  "errors" : {
+                    "reasons" : [ "Restaurant already exists." ]
+                  }
                 }
               }
             }
@@ -678,10 +754,14 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessageDto"
+                  "$ref" : "#/components/schemas/ErrorDto"
                 },
                 "example" : {
-                  "message" : "Something went wrong, please try again later."
+                  "title" : "BadRequest",
+                  "statusCode" : 400,
+                  "errors" : {
+                    "reasons" : [ "Something went wrong, please try again later." ]
+                  }
                 }
               }
             }
@@ -691,10 +771,14 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessageDto"
+                  "$ref" : "#/components/schemas/ErrorDto"
                 },
                 "example" : {
-                  "message" : "Please login and use provided tokens."
+                  "title" : "Unauthorized",
+                  "statusCode" : 401,
+                  "errors" : {
+                    "reasons" : [ "Please login and use provided tokens." ]
+                  }
                 }
               }
             }
@@ -723,6 +807,21 @@
           "message" : {
             "type" : "string",
             "description" : "The message."
+          }
+        }
+      },
+      "ErrorDto" : {
+        "properties" : {
+          "title" : {
+            "type" : "string",
+            "description" : "The title."
+          },
+          "statusCode" : {
+            "type" : "number",
+            "description" : "The status code."
+          },
+          "errors" : {
+            "$ref" : "#/components/schemas/ErrorDto_errors"
           }
         }
       },
@@ -1107,6 +1206,18 @@
             "description" : "True if the restaurant is open to eat in place."
           }
         }
+      },
+      "ErrorDto_errors" : {
+        "properties" : {
+          "reasons" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "description" : "The reason."
+            }
+          }
+        },
+        "example" : null
       }
     },
     "securitySchemes" : {
