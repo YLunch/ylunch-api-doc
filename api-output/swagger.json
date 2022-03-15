@@ -191,7 +191,21 @@
             }
           },
           "403" : {
-            "description" : "Forbidden:\n- User has not granted roles\n"
+            "description" : "Forbidden:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Forbidden",
+                  "statusCode" : 403,
+                  "errors" : {
+                    "reasons" : [ "User has not granted roles." ]
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -251,7 +265,21 @@
             }
           },
           "403" : {
-            "description" : "Forbidden:\n- User has not granted roles\n"
+            "description" : "Forbidden:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Forbidden",
+                  "statusCode" : 403,
+                  "errors" : {
+                    "reasons" : [ "User has not granted roles." ]
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -306,23 +334,21 @@
                   "$ref" : "#/components/schemas/MessageDto"
                 },
                 "examples" : {
+                  "ValidationError" : {
+                    "value" : {
+                      "title" : "One or more validation errors occurred.",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "Email" : [ "The Email field is required." ]
+                      }
+                    }
+                  },
                   "Other" : {
                     "value" : {
                       "title" : "BadRequest",
                       "statusCode" : 400,
                       "errors" : {
                         "reasons" : [ "Something went wrong, please try again later." ]
-                      }
-                    }
-                  },
-                  "ValidationError" : {
-                    "value" : {
-                      "type" : "https://tools.ietf.org/html/rfc7231#section-6.5.1",
-                      "title" : "One or more validation errors occurred.",
-                      "statusCode" : 400,
-                      "traceId" : "00-9393a6db2a571eaf5be54665fe54611b-9b403c28dba47801-00",
-                      "errors" : {
-                        "Email" : [ "The Email field is required." ]
                       }
                     }
                   }
@@ -386,23 +412,21 @@
                   "$ref" : "#/components/schemas/MessageDto"
                 },
                 "examples" : {
+                  "ValidationError" : {
+                    "value" : {
+                      "title" : "One or more validation errors occurred.",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "AccessToken" : [ "The AccessToken field is required." ]
+                      }
+                    }
+                  },
                   "Other" : {
                     "value" : {
                       "title" : "BadRequest",
                       "statusCode" : 400,
                       "errors" : {
                         "reasons" : [ "Something went wrong, please try again later." ]
-                      }
-                    }
-                  },
-                  "ValidationError" : {
-                    "value" : {
-                      "type" : "https://tools.ietf.org/html/rfc7231#section-6.5.1",
-                      "title" : "One or more validation errors occurred.",
-                      "statusCode" : 400,
-                      "traceId" : "00-9393a6db2a571eaf5be54665fe54611b-9b403c28dba47801-00",
-                      "errors" : {
-                        "AccessToken" : [ "The AccessToken field is required." ]
                       }
                     }
                   }
@@ -421,7 +445,7 @@
                   "title" : "Unauthorized",
                   "statusCode" : 401,
                   "errors" : {
-                    "reasons" : [ "Please login and use provided tokens." ]
+                    "reasons" : [ "Invalid tokens, please login to generate new valid tokens." ]
                   }
                 }
               }
@@ -519,23 +543,21 @@
                   "$ref" : "#/components/schemas/MessageDto"
                 },
                 "examples" : {
+                  "ValidationError" : {
+                    "value" : {
+                      "title" : "One or more validation errors occurred.",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "Name" : [ "The Name field is required." ]
+                      }
+                    }
+                  },
                   "Other" : {
                     "value" : {
                       "title" : "BadRequest",
                       "statusCode" : 400,
                       "errors" : {
                         "reasons" : [ "Something went wrong, please try again later." ]
-                      }
-                    }
-                  },
-                  "ValidationError" : {
-                    "value" : {
-                      "type" : "https://tools.ietf.org/html/rfc7231#section-6.5.1",
-                      "title" : "One or more validation errors occurred.",
-                      "statusCode" : 400,
-                      "traceId" : "00-9393a6db2a571eaf5be54665fe54611b-9b403c28dba47801-00",
-                      "errors" : {
-                        "Name" : [ "The Name field is required." ]
                       }
                     }
                   }
@@ -598,23 +620,21 @@
                   "$ref" : "#/components/schemas/MessageDto"
                 },
                 "examples" : {
+                  "ValidationError" : {
+                    "value" : {
+                      "title" : "One or more validation errors occurred.",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "Name" : [ "The Name field is required." ]
+                      }
+                    }
+                  },
                   "Other" : {
                     "value" : {
                       "title" : "BadRequest",
                       "statusCode" : 400,
                       "errors" : {
                         "reasons" : [ "Something went wrong, please try again later." ]
-                      }
-                    }
-                  },
-                  "ValidationError" : {
-                    "value" : {
-                      "type" : "https://tools.ietf.org/html/rfc7231#section-6.5.1",
-                      "title" : "One or more validation errors occurred.",
-                      "statusCode" : 400,
-                      "traceId" : "00-9393a6db2a571eaf5be54665fe54611b-9b403c28dba47801-00",
-                      "errors" : {
-                        "Name" : [ "The Name field is required." ]
                       }
                     }
                   }
@@ -677,23 +697,21 @@
                   "$ref" : "#/components/schemas/MessageDto"
                 },
                 "examples" : {
+                  "ValidationError" : {
+                    "value" : {
+                      "title" : "One or more validation errors occurred.",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "Name" : [ "The Name field is required." ]
+                      }
+                    }
+                  },
                   "Other" : {
                     "value" : {
                       "title" : "BadRequest",
                       "statusCode" : 400,
                       "errors" : {
                         "reasons" : [ "Something went wrong, please try again later." ]
-                      }
-                    }
-                  },
-                  "ValidationError" : {
-                    "value" : {
-                      "type" : "https://tools.ietf.org/html/rfc7231#section-6.5.1",
-                      "title" : "One or more validation errors occurred.",
-                      "statusCode" : 400,
-                      "traceId" : "00-9393a6db2a571eaf5be54665fe54611b-9b403c28dba47801-00",
-                      "errors" : {
-                        "Name" : [ "The Name field is required." ]
                       }
                     }
                   }
