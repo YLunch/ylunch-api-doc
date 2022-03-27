@@ -47,7 +47,7 @@
         "operationId" : "getAnonymousTry",
         "responses" : {
           "200" : {
-            "description" : "Success:\n- The anonymous trial Json object\n",
+            "description" : "Success\n- The anonymous trial Json object\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -60,7 +60,7 @@
             }
           },
           "400" : {
-            "description" : "Bad request:\n",
+            "description" : "Bad request\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -87,7 +87,7 @@
         "operationId" : "getAuthenticatedTry",
         "responses" : {
           "200" : {
-            "description" : "Success:\n- The authenticated trial Json object\n",
+            "description" : "Success\n- The authenticated trial Json object\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -100,7 +100,7 @@
             }
           },
           "400" : {
-            "description" : "Bad request:\n",
+            "description" : "Bad request\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -117,7 +117,7 @@
             }
           },
           "401" : {
-            "description" : "Unauthorized:\n",
+            "description" : "Unauthorized\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -144,7 +144,7 @@
         "operationId" : "getAuthenticatedCustomerTry",
         "responses" : {
           "200" : {
-            "description" : "Success:\n- The authenticated trial Json object\n",
+            "description" : "Success\n- The authenticated trial Json object\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -157,7 +157,7 @@
             }
           },
           "400" : {
-            "description" : "Bad request:\n",
+            "description" : "Bad request\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -174,7 +174,7 @@
             }
           },
           "401" : {
-            "description" : "Unauthorized:\n",
+            "description" : "Unauthorized\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -191,7 +191,7 @@
             }
           },
           "403" : {
-            "description" : "Forbidden:\n",
+            "description" : "Forbidden\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -218,7 +218,7 @@
         "operationId" : "getAuthenticatedRestaurantAdminTry",
         "responses" : {
           "200" : {
-            "description" : "Success:\n- The authenticated trial Json object\n",
+            "description" : "Success\n- The authenticated trial Json object\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -231,7 +231,7 @@
             }
           },
           "400" : {
-            "description" : "Bad request:\n",
+            "description" : "Bad request\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -248,7 +248,7 @@
             }
           },
           "401" : {
-            "description" : "Unauthorized:\n",
+            "description" : "Unauthorized\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -265,7 +265,7 @@
             }
           },
           "403" : {
-            "description" : "Forbidden:\n",
+            "description" : "Forbidden\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -317,7 +317,7 @@
         },
         "responses" : {
           "200" : {
-            "description" : "Success:\n- The access and refresh tokens\n",
+            "description" : "Success\n- The access and refresh tokens\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -327,7 +327,7 @@
             }
           },
           "400" : {
-            "description" : "Bad request:\n",
+            "description" : "Bad request\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -357,7 +357,7 @@
             }
           },
           "401" : {
-            "description" : "Unauthorized:\n",
+            "description" : "Unauthorized\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -395,7 +395,7 @@
         },
         "responses" : {
           "200" : {
-            "description" : "Success:\n- The new access and refresh tokens\n",
+            "description" : "Success\n- The new access and refresh tokens\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -405,7 +405,7 @@
             }
           },
           "400" : {
-            "description" : "Bad request:\n",
+            "description" : "Bad request\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -435,7 +435,7 @@
             }
           },
           "401" : {
-            "description" : "Unauthorized:\n",
+            "description" : "Unauthorized\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -462,7 +462,7 @@
         "operationId" : "getCurrentUser",
         "responses" : {
           "200" : {
-            "description" : "Success:\n- The current user Json object\n",
+            "description" : "Success\n- The current user Json object\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -472,7 +472,7 @@
             }
           },
           "400" : {
-            "description" : "Bad request:\n",
+            "description" : "Bad request\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -489,7 +489,7 @@
             }
           },
           "401" : {
-            "description" : "Unauthorized:\n",
+            "description" : "Unauthorized\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -536,7 +536,7 @@
             }
           },
           "400" : {
-            "description" : "Bad request:\n",
+            "description" : "Bad request\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -566,7 +566,7 @@
             }
           },
           "409" : {
-            "description" : "Conflict:\n",
+            "description" : "Conflict\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -613,7 +613,7 @@
             }
           },
           "400" : {
-            "description" : "Bad request:\n",
+            "description" : "Bad request\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -643,7 +643,7 @@
             }
           },
           "409" : {
-            "description" : "Conflict:\n",
+            "description" : "Conflict\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -663,6 +663,84 @@
       }
     },
     "/restaurants" : {
+      "get" : {
+        "tags" : [ "restaurants" ],
+        "summary" : "Gets restaurants",
+        "operationId" : "getRestaurants",
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "description" : "The page you want within 1 and 10 000. Default 1.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "size",
+          "in" : "query",
+          "description" : "The size you want within 1 and 30. Default 30.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "isPublished",
+          "in" : "query",
+          "description" : "To filter the restaurants that are published or not. Default null to get both.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "isCurrentlyOpenToOrder",
+          "in" : "query",
+          "description" : "To filter the restaurants that are currently open to order or not. Default null to get both.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "boolean"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success\n- The restaurants\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/RestaurantReadDto"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "BadRequest",
+                  "statusCode" : 400,
+                  "errors" : {
+                    "reasons" : [ "Something went wrong, please try again later." ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "post" : {
         "tags" : [ "restaurants" ],
         "summary" : "Restaurant creation",
@@ -690,7 +768,7 @@
             }
           },
           "400" : {
-            "description" : "Bad request:\n",
+            "description" : "Bad request\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -720,7 +798,7 @@
             }
           },
           "409" : {
-            "description" : "Conflict:\n",
+            "description" : "Conflict\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -758,7 +836,7 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "Success:\n- The restaurant\n",
+            "description" : "Success\n- The restaurant\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -768,7 +846,7 @@
             }
           },
           "400" : {
-            "description" : "Bad request:\n",
+            "description" : "Bad request\n",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -785,7 +863,7 @@
             }
           },
           "401" : {
-            "description" : "Unauthorized:\n",
+            "description" : "Unauthorized\n",
             "content" : {
               "application/json" : {
                 "schema" : {
