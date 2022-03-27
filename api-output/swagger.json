@@ -1143,7 +1143,7 @@
           },
           "isOpen" : {
             "type" : "boolean",
-            "description" : "Boolean to set manually if the restaurant is open or not:\n- `False`: the restaurant will be set as closed regardless of closing dates and opening times\n- `True`: the restaurant will be set as open regarding closing dates and opening times\n",
+            "description" : "Boolean to set manually if the restaurant is open or not:\n- `False`: the restaurant will be set as closed regardless of closing dates and opening times.\n- `True`: the restaurant will be set as open regarding closing dates and opening times.\n",
             "example" : true
           },
           "isPublic" : {
@@ -1228,7 +1228,7 @@
           },
           "isOpen" : {
             "type" : "boolean",
-            "description" : "Boolean to set manually if the restaurant is open or not:\n- `False`: the restaurant will be set as closed regardless of closing dates and opening times\n- `True`: the restaurant will be set as open regarding closing dates and opening times\n",
+            "description" : "Boolean to set manually if the restaurant is open or not:\n- `False`: the restaurant will be set as closed regardless of closing dates and opening times.\n- `True`: the restaurant will be set as open regarding closing dates and opening times.\n",
             "example" : true
           },
           "isPublic" : {
