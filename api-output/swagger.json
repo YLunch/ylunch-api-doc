@@ -1303,6 +1303,83 @@
           }
         }
       },
+      "AllergenCreateDto" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "Must be lowercase.",
+            "example" : "gluten"
+          }
+        }
+      },
+      "ProductTagCreateDto" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "Must be lowercase. A tag to categorise a product.",
+            "example" : "pizza"
+          }
+        }
+      },
+      "ProductCreateDto" : {
+        "required" : [ "allergens", "isActive", "name", "price", "productType" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "Must be lowercase.",
+            "example" : "my product"
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "Must be lowercase.",
+            "example" : "my ingredients"
+          },
+          "price" : {
+            "type" : "number",
+            "example" : 9.8
+          },
+          "quantity" : {
+            "type" : "number",
+            "description" : "Must be between 1 and 10000 or `null` meaning infinite.",
+            "example" : 3
+          },
+          "isActive" : {
+            "type" : "boolean",
+            "description" : "- `True` if the product is available\n- `False` to force a product to be unavailable, bypasses the quantity'\n",
+            "example" : true
+          },
+          "productType" : {
+            "type" : "number",
+            "description" : "One of:\n- `0`: Starter,\n- `1`: Main,\n- `2`: Dessert,\n- `3`: Drink,\n- `4`: Menu,\n- `5`: Daily,\n- `6`: Other\n",
+            "example" : 0
+          },
+          "expirationDateTime" : {
+            "type" : "string",
+            "description" : "Must be in the future.",
+            "example" : "2021-12-31T00:00:00.000000"
+          },
+          "image" : {
+            "type" : "string",
+            "description" : "Base 64 encoded image",
+            "example" : "data:image/png;base64,iVBORw0KGgoAAA..."
+          },
+          "allergens" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/AllergenCreateDto"
+            }
+          },
+          "productTags" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ProductTagCreateDto"
+            }
+          }
+        }
+      },
       "ErrorDto_errors" : {
         "properties" : {
           "reasons" : {
