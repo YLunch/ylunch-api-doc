@@ -37,6 +37,9 @@
   }, {
     "name" : "restaurants",
     "description" : "restaurants endpoints"
+  }, {
+    "name" : "products",
+    "description" : "products endpoints"
   } ],
   "paths" : {
     "/trials/anonymous" : {
@@ -894,6 +897,107 @@
           }
         }
       }
+    },
+    "/restaurants/{restaurantId}/products" : {
+      "post" : {
+        "tags" : [ "products" ],
+        "summary" : "Product creation",
+        "description" : "- Authorization header: **yes**\n- Granted roles:\n  - RestaurantAdmin\n",
+        "operationId" : "addProduct",
+        "parameters" : [ {
+          "name" : "restaurantId",
+          "in" : "path",
+          "description" : "The id of the restaurant in which you want to create a product",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Product to create",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ProductCreateDto"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "product created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProductReadDto"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "examples" : {
+                  "ValidationError" : {
+                    "value" : {
+                      "title" : "One or more validation errors occurred.",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "Name" : [ "The Name field is required." ]
+                      }
+                    }
+                  },
+                  "Other" : {
+                    "value" : {
+                      "title" : "BadRequest",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "reasons" : [ "Something went wrong, please try again later." ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not found:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "example" : {
+                  "message" : "Restaurant not found."
+                }
+              }
+            }
+          },
+          "409" : {
+            "description" : "Conflict\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Conflict",
+                  "statusCode" : 409,
+                  "errors" : {
+                    "reasons" : [ "Restaurant already exists." ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components" : {
@@ -1313,12 +1417,38 @@
           }
         }
       },
+      "AllergenReadDto" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "gluten"
+          }
+        }
+      },
       "ProductTagCreateDto" : {
         "type" : "object",
         "properties" : {
           "name" : {
             "type" : "string",
             "description" : "Must be lowercase. A tag to categorise a product.",
+            "example" : "pizza"
+          }
+        }
+      },
+      "ProductTagReadDto" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "name" : {
+            "type" : "string",
             "example" : "pizza"
           }
         }
@@ -1376,6 +1506,63 @@
             "type" : "array",
             "items" : {
               "$ref" : "#/components/schemas/ProductTagCreateDto"
+            }
+          }
+        }
+      },
+      "ProductReadDto" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "my product"
+          },
+          "description" : {
+            "type" : "string",
+            "example" : "my ingredients"
+          },
+          "price" : {
+            "type" : "number",
+            "example" : 9.8
+          },
+          "quantity" : {
+            "type" : "number",
+            "description" : "Quantity of product between 1 and 10000 or `null` meaning infinite.",
+            "example" : 3
+          },
+          "isActive" : {
+            "type" : "boolean",
+            "description" : "- `True` if the product is available\n- `False` if the product is unavailable, bypasses the quantity'\n",
+            "example" : true
+          },
+          "productType" : {
+            "type" : "number",
+            "description" : "One of:\n- `0`: Starter,\n- `1`: Main,\n- `2`: Dessert,\n- `3`: Drink,\n- `4`: Menu,\n- `5`: Daily,\n- `6`: Other\n",
+            "example" : 0
+          },
+          "expirationDateTime" : {
+            "type" : "string",
+            "example" : "2021-12-31T00:00:00.000000"
+          },
+          "image" : {
+            "type" : "string",
+            "description" : "Base 64 encoded image",
+            "example" : "data:image/png;base64,iVBORw0KGgoAAA..."
+          },
+          "allergens" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/AllergenReadDto"
+            }
+          },
+          "productTags" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ProductTagReadDto"
             }
           }
         }
