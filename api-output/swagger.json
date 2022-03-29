@@ -990,7 +990,7 @@
                   "title" : "Conflict",
                   "statusCode" : 409,
                   "errors" : {
-                    "reasons" : [ "Restaurant already exists." ]
+                    "reasons" : [ "Product already exists." ]
                   }
                 }
               }
