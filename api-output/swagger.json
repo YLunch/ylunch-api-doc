@@ -669,6 +669,7 @@
       "get" : {
         "tags" : [ "restaurants" ],
         "summary" : "Gets restaurants",
+        "description" : "- Authorization header: **no**\n",
         "operationId" : "getRestaurants",
         "parameters" : [ {
           "name" : "page",
@@ -821,10 +822,10 @@
       }
     },
     "/restaurants/{restaurantId}" : {
-      "description" : "- Authorization header: **yes**\n- Granted roles:\n  - All\n",
       "get" : {
         "tags" : [ "restaurants" ],
         "summary" : "Gets a restaurant by id",
+        "description" : "- Authorization header: **no**\n",
         "operationId" : "getRestaurantById",
         "parameters" : [ {
           "name" : "restaurantId",
@@ -1003,6 +1004,7 @@
       "get" : {
         "tags" : [ "products" ],
         "summary" : "Gets a product by id",
+        "description" : "- Authorization header: **no**\n",
         "operationId" : "getProductById",
         "parameters" : [ {
           "name" : "productId",
