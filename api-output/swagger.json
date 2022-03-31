@@ -900,6 +900,68 @@
       }
     },
     "/restaurants/{restaurantId}/products" : {
+      "get" : {
+        "tags" : [ "products" ],
+        "summary" : "Gets products",
+        "description" : "- Authorization header: **no**\n",
+        "operationId" : "getProducts",
+        "parameters" : [ {
+          "name" : "restaurantId",
+          "in" : "path",
+          "description" : "The id of the restaurant you want to get the products",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success\n- The products\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ProductReadDto"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "BadRequest",
+                  "statusCode" : 400,
+                  "errors" : {
+                    "reasons" : [ "Something went wrong, please try again later." ]
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not found:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "example" : {
+                  "message" : "Restaurant not found."
+                }
+              }
+            }
+          }
+        }
+      },
       "post" : {
         "tags" : [ "products" ],
         "summary" : "Product creation",
