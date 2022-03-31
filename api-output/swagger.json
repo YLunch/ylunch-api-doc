@@ -908,12 +908,42 @@
         "parameters" : [ {
           "name" : "restaurantId",
           "in" : "path",
-          "description" : "The id of the restaurant you want to get the products",
+          "description" : "The id of the restaurant you want to get the products.",
           "required" : true,
           "style" : "simple",
           "explode" : false,
           "schema" : {
             "type" : "string"
+          }
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "The page you want within 1 and 10 000. Default 1.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "size",
+          "in" : "query",
+          "description" : "The size you want within 1 and 50. Default 50.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "isAvailable",
+          "in" : "query",
+          "description" : "To filter the restaurants that are available or not. Default null to get both. A product is available when isActive is true, quantity is null or > 1, expirationDateTime is null or in the future.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "boolean"
           }
         } ],
         "responses" : {
@@ -1197,6 +1227,7 @@
         "properties" : {
           "email" : {
             "type" : "string",
+            "description" : "It should be lowercase email format and could contain '.', '-' and/or '_' characters.",
             "format" : "email",
             "example" : "admin@restaurant.com"
           },
@@ -1226,6 +1257,7 @@
         "properties" : {
           "email" : {
             "type" : "string",
+            "description" : "It should be a lowercase Ynov email format and could contain '.', '-' and/or '_' characters.",
             "format" : "email",
             "example" : "anne-marie.martin@ynov.com"
           },
