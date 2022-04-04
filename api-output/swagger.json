@@ -672,24 +672,15 @@
         "description" : "- Authorization header: **no**\n",
         "operationId" : "getRestaurants",
         "parameters" : [ {
-          "name" : "page",
+          "name" : "restaurantAdminId",
           "in" : "query",
-          "description" : "The page you want within 1 and 10 000. Default 1.",
+          "description" : "To filter the restaurants that are related to the restaurantAdmin id. Default null to ignore this param and get all.",
           "required" : false,
           "style" : "form",
           "explode" : true,
           "schema" : {
-            "type" : "number"
-          }
-        }, {
-          "name" : "size",
-          "in" : "query",
-          "description" : "The size you want within 1 and 30. Default 30.",
-          "required" : false,
-          "style" : "form",
-          "explode" : true,
-          "schema" : {
-            "type" : "number"
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
           }
         }, {
           "name" : "isPublished",
@@ -710,6 +701,26 @@
           "explode" : true,
           "schema" : {
             "type" : "boolean"
+          }
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "The page you want within 1 and 10 000. Default 1.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "size",
+          "in" : "query",
+          "description" : "The size you want within 1 and 30. Default 30.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "number"
           }
         } ],
         "responses" : {
