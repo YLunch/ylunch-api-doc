@@ -1989,6 +1989,16 @@
             "type" : "string",
             "example" : "my ingredients"
           },
+          "allergens" : {
+            "type" : "string",
+            "description" : "ordered by name",
+            "example" : "arachide, gluten"
+          },
+          "productTags" : {
+            "type" : "string",
+            "description" : "ordered by name",
+            "example" : "italienne, pizza"
+          },
           "price" : {
             "type" : "number",
             "example" : 9.8
