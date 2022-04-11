@@ -1179,6 +1179,107 @@
           }
         }
       }
+    },
+    "/restaurants/{restaurantId}/orders" : {
+      "post" : {
+        "tags" : [ "orders" ],
+        "summary" : "Order creation",
+        "description" : "- Authorization header: **yes**\n- Granted roles:\n  - Customer\n",
+        "operationId" : "addOrder",
+        "parameters" : [ {
+          "name" : "restaurantId",
+          "in" : "path",
+          "description" : "The id of the restaurant in where you want to order",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Order to create",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/OrderCreateDto"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "order created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OrderReadDto"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "examples" : {
+                  "ValidationError" : {
+                    "value" : {
+                      "title" : "One or more validation errors occurred.",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "Name" : [ "The Name field is required." ]
+                      }
+                    }
+                  },
+                  "Other" : {
+                    "value" : {
+                      "title" : "BadRequest",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "reasons" : [ "Something went wrong, please try again later." ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not found:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "examples" : {
+                  "RestaurantNotFound" : {
+                    "value" : {
+                      "title" : "NotFound",
+                      "statusCode" : 404,
+                      "errors" : {
+                        "reasons" : [ "Restaurant: a00000e0-aaa0-000a-0000-00e00aa00e00 not found." ]
+                      }
+                    }
+                  },
+                  "ProductNotFound" : {
+                    "value" : {
+                      "title" : "NotFound",
+                      "statusCode" : 404,
+                      "errors" : {
+                        "reasons" : [ "Product: a00000e0-aaa0-000a-0000-00e00aa00e00 not found." ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components" : {
@@ -1700,6 +1801,10 @@
             "type" : "string",
             "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
           },
+          "restaurantId" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
           "name" : {
             "type" : "string",
             "example" : "my product"
@@ -1727,6 +1832,10 @@
             "description" : "One of:\n- `0`: Starter,\n- `1`: Main,\n- `2`: Dessert,\n- `3`: Drink,\n- `4`: Menu,\n- `5`: Daily,\n- `6`: Other\n",
             "example" : 0
           },
+          "creationDateTime" : {
+            "type" : "string",
+            "example" : "2021-12-31T00:00:00.000000"
+          },
           "expirationDateTime" : {
             "type" : "string",
             "example" : "2021-12-31T00:00:00.000000"
@@ -1746,6 +1855,176 @@
             "type" : "array",
             "items" : {
               "$ref" : "#/components/schemas/ProductTagReadDto"
+            }
+          }
+        }
+      },
+      "OrderedProductReadDto" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "productId" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "restaurantId" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "orderId" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "userId" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "my product"
+          },
+          "description" : {
+            "type" : "string",
+            "example" : "my ingredients"
+          },
+          "price" : {
+            "type" : "number",
+            "example" : 9.8
+          },
+          "productType" : {
+            "type" : "number",
+            "description" : "One of:\n- `0`: Starter,\n- `1`: Main,\n- `2`: Dessert,\n- `3`: Drink,\n- `4`: Menu,\n- `5`: Daily,\n- `6`: Other\n",
+            "example" : 0
+          },
+          "creationDateTime" : {
+            "type" : "string",
+            "example" : "2021-12-31T00:00:00.000000"
+          },
+          "expirationDateTime" : {
+            "type" : "string",
+            "example" : "2021-12-31T00:00:00.000000"
+          },
+          "image" : {
+            "type" : "string",
+            "description" : "Base 64 encoded image",
+            "example" : "data:image/png;base64,iVBORw0KGgoAAA..."
+          }
+        }
+      },
+      "OrderStatusReadDto" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "orderId" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "orderState" : {
+            "type" : "number",
+            "description" : "One of:\n- `0`: Idling,\n- `1`: Acknowledged,\n- `2`: InPreparation,\n- `3`: Ready,\n- `4`: Delivered,\n- `5`: Other,\n- `6`: Cancelled,\n- `7`: Rejected\n",
+            "example" : 0
+          },
+          "dateTime" : {
+            "type" : "string",
+            "example" : "2021-12-31T00:00:00.000000"
+          }
+        }
+      },
+      "OrderCreateDto" : {
+        "required" : [ "productIds", "reservedForDateTime" ],
+        "type" : "object",
+        "properties" : {
+          "productIds" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+            }
+          },
+          "reservedForDateTime" : {
+            "type" : "string",
+            "description" : "Must be in future and within restaurant order opening times",
+            "example" : "2021-12-31T00:00:00.000000"
+          },
+          "customerComment" : {
+            "type" : "string",
+            "example" : "without onions"
+          }
+        }
+      },
+      "OrderReadDto" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "userId" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "restaurantId" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "totalPrice" : {
+            "type" : "number",
+            "example" : 19.6
+          },
+          "creationDateTime" : {
+            "type" : "string",
+            "example" : "2021-12-31T00:00:00.000000"
+          },
+          "reservedForDateTime" : {
+            "type" : "string",
+            "example" : "2021-12-31T00:00:00.000000"
+          },
+          "acceptationDateTime" : {
+            "type" : "string",
+            "example" : "2021-12-31T00:00:00.000000"
+          },
+          "customerComment" : {
+            "type" : "string",
+            "example" : "without onions"
+          },
+          "restaurantComment" : {
+            "type" : "string",
+            "example" : "ok, we remove onions"
+          },
+          "isAcknowledged" : {
+            "type" : "boolean",
+            "description" : "- `True` if the restaurant is aware of the order\n- `False` if the restaurant is not aware of the order\n",
+            "example" : true
+          },
+          "isAccepted" : {
+            "type" : "boolean",
+            "description" : "- `True` if the restaurant has accepted the order\n- `False` if the restaurant has not accepted the order\n",
+            "example" : true
+          },
+          "isDeleted" : {
+            "type" : "boolean",
+            "description" : "- `True` if the order is processed\n- `False` if the order is still processing\n",
+            "example" : true
+          },
+          "CurrentOrderStatus" : {
+            "$ref" : "#/components/schemas/OrderStatusReadDto"
+          },
+          "OrderStatuses" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/OrderStatusReadDto"
+            }
+          },
+          "OrderedProducts" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/OrderedProductReadDto"
             }
           }
         }
