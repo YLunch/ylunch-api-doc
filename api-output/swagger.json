@@ -334,7 +334,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessageDto"
+                  "$ref" : "#/components/schemas/ErrorDto"
                 },
                 "examples" : {
                   "ValidationError" : {
@@ -412,7 +412,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessageDto"
+                  "$ref" : "#/components/schemas/ErrorDto"
                 },
                 "examples" : {
                   "ValidationError" : {
@@ -543,7 +543,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessageDto"
+                  "$ref" : "#/components/schemas/ErrorDto"
                 },
                 "examples" : {
                   "ValidationError" : {
@@ -620,7 +620,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessageDto"
+                  "$ref" : "#/components/schemas/ErrorDto"
                 },
                 "examples" : {
                   "ValidationError" : {
@@ -787,7 +787,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessageDto"
+                  "$ref" : "#/components/schemas/ErrorDto"
                 },
                 "examples" : {
                   "ValidationError" : {
@@ -899,10 +899,14 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessageDto"
+                  "$ref" : "#/components/schemas/ErrorDto"
                 },
                 "example" : {
-                  "message" : "Restaurant not found."
+                  "title" : "NotFound",
+                  "statusCode" : 404,
+                  "errors" : {
+                    "reasons" : [ "Restaurant: `<ID>` not found." ]
+                  }
                 }
               }
             }
@@ -993,10 +997,14 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessageDto"
+                  "$ref" : "#/components/schemas/ErrorDto"
                 },
                 "example" : {
-                  "message" : "Restaurant not found."
+                  "title" : "NotFound",
+                  "statusCode" : 404,
+                  "errors" : {
+                    "reasons" : [ "Restaurant: `<ID>` not found." ]
+                  }
                 }
               }
             }
@@ -1045,7 +1053,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessageDto"
+                  "$ref" : "#/components/schemas/ErrorDto"
                 },
                 "examples" : {
                   "ValidationError" : {
@@ -1075,10 +1083,14 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessageDto"
+                  "$ref" : "#/components/schemas/ErrorDto"
                 },
                 "example" : {
-                  "message" : "Restaurant not found."
+                  "title" : "NotFound",
+                  "statusCode" : 404,
+                  "errors" : {
+                    "reasons" : [ "Restaurant: `<ID>` not found." ]
+                  }
                 }
               }
             }
@@ -1153,10 +1165,14 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessageDto"
+                  "$ref" : "#/components/schemas/ErrorDto"
                 },
                 "example" : {
-                  "message" : "Product not found."
+                  "title" : "NotFound",
+                  "statusCode" : 404,
+                  "errors" : {
+                    "reasons" : [ "Product: `<ID>` not found." ]
+                  }
                 }
               }
             }
