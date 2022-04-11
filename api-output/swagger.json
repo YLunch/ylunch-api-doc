@@ -1231,7 +1231,7 @@
                       "title" : "One or more validation errors occurred.",
                       "statusCode" : 400,
                       "errors" : {
-                        "Name" : [ "The Name field is required." ]
+                        "Name" : [ "The ProductIds field is required." ]
                       }
                     }
                   },
@@ -1307,6 +1307,71 @@
                         "reasons" : [ "Product: a00000e0-aaa0-000a-0000-00e00aa00e00 not found." ]
                       }
                     }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders/{orderId}" : {
+      "get" : {
+        "tags" : [ "orders" ],
+        "summary" : "Gets a order by id",
+        "description" : "- Authorization header: **no**\n",
+        "operationId" : "getOrderById",
+        "parameters" : [ {
+          "name" : "orderId",
+          "in" : "path",
+          "description" : "The id of the order you want to get",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success\n- The order\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OrderReadDto"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "BadRequest",
+                  "statusCode" : 400,
+                  "errors" : {
+                    "reasons" : [ "Something went wrong, please try again later." ]
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not found:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "NotFound",
+                  "statusCode" : 404,
+                  "errors" : {
+                    "reasons" : [ "Order: a00000e0-aaa0-000a-0000-00e00aa00e00 not found." ]
                   }
                 }
               }
