@@ -1248,6 +1248,40 @@
               }
             }
           },
+          "401" : {
+            "description" : "Unauthorized\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Unauthorized",
+                  "statusCode" : 401,
+                  "errors" : {
+                    "reasons" : [ "Please login and use provided tokens." ]
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Forbidden",
+                  "statusCode" : 403,
+                  "errors" : {
+                    "reasons" : [ "User has not granted roles." ]
+                  }
+                }
+              }
+            }
+          },
           "404" : {
             "description" : "Not found:\n",
             "content" : {
