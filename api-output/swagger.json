@@ -379,6 +379,53 @@
         }
       }
     },
+    "/authentication/logout" : {
+      "get" : {
+        "tags" : [ "authentication" ],
+        "summary" : "Logs out the current user",
+        "description" : "- Authorization header: **yes**\n- Granted roles: \n  - All\n",
+        "operationId" : "logout",
+        "responses" : {
+          "204" : {
+            "description" : "NoContent\n"
+          },
+          "400" : {
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "BadRequest",
+                  "statusCode" : 400,
+                  "errors" : {
+                    "reasons" : [ "Something went wrong, please try again later." ]
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Unauthorized",
+                  "statusCode" : 401,
+                  "errors" : {
+                    "reasons" : [ "Invalid tokens, please login to generate new valid tokens." ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/authentication/refresh-tokens" : {
       "post" : {
         "tags" : [ "authentication" ],
@@ -668,7 +715,7 @@
     "/restaurants" : {
       "get" : {
         "tags" : [ "restaurants" ],
-        "summary" : "Gets restaurants",
+        "summary" : "Gets restaurants ordered by creationDateTime",
         "description" : "- Authorization header: **no**\n",
         "operationId" : "getRestaurants",
         "parameters" : [ {
@@ -917,7 +964,7 @@
     "/restaurants/{restaurantId}/products" : {
       "get" : {
         "tags" : [ "products" ],
-        "summary" : "Gets products",
+        "summary" : "Gets products ordered by name",
         "description" : "- Authorization header: **no**\n",
         "operationId" : "getProducts",
         "parameters" : [ {
@@ -943,7 +990,7 @@
         }, {
           "name" : "size",
           "in" : "query",
-          "description" : "The size you want within 1 and 50. Default 50.",
+          "description" : "The size you want within 1 and 250. Default 250.",
           "required" : false,
           "style" : "form",
           "explode" : true,
@@ -1181,6 +1228,171 @@
       }
     },
     "/restaurants/{restaurantId}/orders" : {
+      "get" : {
+        "tags" : [ "orders" ],
+        "summary" : "Gets orders ordered by creationDateTime",
+        "description" : "- Authorization header: **yes**\n- Granted roles:\n  - RestaurantAdmin\n",
+        "operationId" : "getOrdersOfRestaurant",
+        "parameters" : [ {
+          "name" : "restaurantId",
+          "in" : "path",
+          "description" : "The id of the restaurant you want to get the orders.",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "customerId",
+          "in" : "query",
+          "description" : "The id of the customer you want to get the orders.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "The page you want within 1 and 10 000. Default 1.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "size",
+          "in" : "query",
+          "description" : "The size you want within 1 and 50. Default 50.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "minCreationDateTime",
+          "in" : "query",
+          "description" : "The minimum date of filtered orders creation date time.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "2021-12-31T00:00:00.000000"
+          }
+        }, {
+          "name" : "maxCreationDateTime",
+          "in" : "query",
+          "description" : "The maximum date of filtered orders creation date time.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "2021-12-31T00:00:00.000000"
+          }
+        }, {
+          "name" : "orderStates",
+          "in" : "query",
+          "description" : "To filter the orders having their current state matching one of this `set` of states.  \nRepeat this parameter for multiple to filter on multiple states.  \nDuplicates will be ignored.  \nOne of:\n  - `0`: Idling,\n  - `1`: Acknowledged,\n  - `2`: InPreparation,\n  - `3`: Ready,\n  - `4`: Delivered,\n  - `5`: Other,\n  - `6`: Cancelled,\n  - `7`: Rejected\n",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "number"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success\n- The orders\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/OrderReadDto"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "BadRequest",
+                  "statusCode" : 400,
+                  "errors" : {
+                    "reasons" : [ "Something went wrong, please try again later." ]
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Unauthorized",
+                  "statusCode" : 401,
+                  "errors" : {
+                    "reasons" : [ "Please login and use provided tokens." ]
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Forbidden",
+                  "statusCode" : 403,
+                  "errors" : {
+                    "reasons" : [ "User has not granted roles." ]
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not found:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "NotFound",
+                  "statusCode" : 404,
+                  "errors" : {
+                    "reasons" : [ "Restaurant: a00000e0-aaa0-000a-0000-00e00aa00e00 not found." ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "post" : {
         "tags" : [ "orders" ],
         "summary" : "Order creation",
@@ -1231,7 +1443,7 @@
                       "title" : "One or more validation errors occurred.",
                       "statusCode" : 400,
                       "errors" : {
-                        "Name" : [ "The ProductIds field is required." ]
+                        "ProductIds" : [ "The ProductIds field is required." ]
                       }
                     }
                   },
@@ -1299,14 +1511,171 @@
                       }
                     }
                   },
-                  "ProductNotFound" : {
+                  "ProductsNotFound" : {
                     "value" : {
                       "title" : "NotFound",
                       "statusCode" : 404,
                       "errors" : {
-                        "reasons" : [ "Product: a00000e0-aaa0-000a-0000-00e00aa00e00 not found." ]
+                        "reasons" : [ "Products: a00000e0-aaa0-000a-0000-00e00aa00e00 and b11111f1-bbb1-111b-1111-11f11bb11f11 not found." ]
                       }
                     }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders" : {
+      "get" : {
+        "tags" : [ "orders" ],
+        "summary" : "Gets orders ordered by creationDateTime",
+        "description" : "- Authorization header: **yes**\n- Granted roles:\n  - Customer\n",
+        "operationId" : "getOrdersOfCurrentCustomer",
+        "parameters" : [ {
+          "name" : "restaurantId",
+          "in" : "query",
+          "description" : "The id of the restaurant you want to get the orders.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "The page you want within 1 and 10 000. Default 1.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "size",
+          "in" : "query",
+          "description" : "The size you want within 1 and 50. Default 50.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "minCreationDateTime",
+          "in" : "query",
+          "description" : "The minimum date of filtered orders creation date time.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "2021-12-31T00:00:00.000000"
+          }
+        }, {
+          "name" : "maxCreationDateTime",
+          "in" : "query",
+          "description" : "The maximum date of filtered orders creation date time.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "2021-12-31T00:00:00.000000"
+          }
+        }, {
+          "name" : "orderStates",
+          "in" : "query",
+          "description" : "To filter the orders having their current state matching one of this `set` of states.  \nRepeat this parameter for multiple to filter on multiple states.  \nDuplicates will be ignored.  \nOne of:\n  - `0`: Idling,\n  - `1`: Acknowledged,\n  - `2`: InPreparation,\n  - `3`: Ready,\n  - `4`: Delivered,\n  - `5`: Other,\n  - `6`: Cancelled,\n  - `7`: Rejected\n",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "number"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success\n- The orders\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/OrderReadDto"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "BadRequest",
+                  "statusCode" : 400,
+                  "errors" : {
+                    "reasons" : [ "Something went wrong, please try again later." ]
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Unauthorized",
+                  "statusCode" : 401,
+                  "errors" : {
+                    "reasons" : [ "Please login and use provided tokens." ]
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Forbidden",
+                  "statusCode" : 403,
+                  "errors" : {
+                    "reasons" : [ "User has not granted roles." ]
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not found:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "NotFound",
+                  "statusCode" : 404,
+                  "errors" : {
+                    "reasons" : [ "Restaurant: a00000e0-aaa0-000a-0000-00e00aa00e00 not found." ]
                   }
                 }
               }
@@ -1318,7 +1687,7 @@
     "/orders/{orderId}" : {
       "get" : {
         "tags" : [ "orders" ],
-        "summary" : "Gets a order by id",
+        "summary" : "Gets an order by id",
         "description" : "- Authorization header: **no**\n",
         "operationId" : "getOrderById",
         "parameters" : [ {
@@ -1372,6 +1741,144 @@
                   "statusCode" : 404,
                   "errors" : {
                     "reasons" : [ "Order: a00000e0-aaa0-000a-0000-00e00aa00e00 not found." ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/restaurants/{restaurantId}/orders/statuses" : {
+      "post" : {
+        "tags" : [ "orders" ],
+        "summary" : "Add status to multiple ordeers",
+        "description" : "- Authorization header: **yes**\n- Granted roles:\n  - RestaurantAdmin\n",
+        "operationId" : "addStatusToOrders",
+        "parameters" : [ {
+          "name" : "restaurantId",
+          "in" : "path",
+          "description" : "The id of the restaurant to which belong the orders you want to add a status",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Array of id of orders plus the state you want to add to them",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/AddStatusToOrdersDto"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "updated orders with the new status as the current one",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/OrderReadDto"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "examples" : {
+                  "ValidationError" : {
+                    "value" : {
+                      "title" : "One or more validation errors occurred.",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "OrderIds" : [ "The OrderIds field is required." ]
+                      }
+                    }
+                  },
+                  "Other" : {
+                    "value" : {
+                      "title" : "BadRequest",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "reasons" : [ "Something went wrong, please try again later." ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Unauthorized",
+                  "statusCode" : 401,
+                  "errors" : {
+                    "reasons" : [ "Please login and use provided tokens." ]
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Forbidden",
+                  "statusCode" : 403,
+                  "errors" : {
+                    "reasons" : [ "User has not granted roles." ]
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not found:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "examples" : {
+                  "RestaurantNotFound" : {
+                    "value" : {
+                      "title" : "NotFound",
+                      "statusCode" : 404,
+                      "errors" : {
+                        "reasons" : [ "Restaurant: a00000e0-aaa0-000a-0000-00e00aa00e00 not found." ]
+                      }
+                    }
+                  },
+                  "OrdersNotFound" : {
+                    "value" : {
+                      "title" : "NotFound",
+                      "statusCode" : 404,
+                      "errors" : {
+                        "reasons" : [ "Orders: a00000e0-aaa0-000a-0000-00e00aa00e00 and b11111f1-bbb1-111b-1111-11f11bb11f11 not found." ]
+                      }
+                    }
                   }
                 }
               }
@@ -2135,6 +2642,24 @@
             "items" : {
               "$ref" : "#/components/schemas/OrderedProductReadDto"
             }
+          }
+        }
+      },
+      "AddStatusToOrdersDto" : {
+        "required" : [ "OrderIds", "OrderState" ],
+        "type" : "object",
+        "properties" : {
+          "OrderIds" : {
+            "type" : "array",
+            "example" : [ "a00000e0-aaa0-000a-0000-00e00aa00e00", "b11111f1-bbb1-111b-1111-11f11bb11f11" ],
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "OrderState" : {
+            "type" : "number",
+            "description" : "One of:\n- `0`: Idling,\n- `1`: Acknowledged,\n- `2`: InPreparation,\n- `3`: Ready,\n- `4`: Delivered,\n- `5`: Other,\n- `6`: Cancelled,\n- `7`: Rejected\n",
+            "example" : 1
           }
         }
       },
