@@ -379,53 +379,6 @@
         }
       }
     },
-    "/authentication/logout" : {
-      "get" : {
-        "tags" : [ "authentication" ],
-        "summary" : "Logs out the current user",
-        "description" : "- Authorization header: **yes**\n- Granted roles: \n  - All\n",
-        "operationId" : "logout",
-        "responses" : {
-          "204" : {
-            "description" : "NoContent\n"
-          },
-          "400" : {
-            "description" : "Bad request\n",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorDto"
-                },
-                "example" : {
-                  "title" : "BadRequest",
-                  "statusCode" : 400,
-                  "errors" : {
-                    "reasons" : [ "Something went wrong, please try again later." ]
-                  }
-                }
-              }
-            }
-          },
-          "401" : {
-            "description" : "Unauthorized\n",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorDto"
-                },
-                "example" : {
-                  "title" : "Unauthorized",
-                  "statusCode" : 401,
-                  "errors" : {
-                    "reasons" : [ "Invalid tokens, please login to generate new valid tokens." ]
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/authentication/refresh-tokens" : {
       "post" : {
         "tags" : [ "authentication" ],
@@ -520,6 +473,53 @@
                 }
               }
             }
+          },
+          "400" : {
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "BadRequest",
+                  "statusCode" : 400,
+                  "errors" : {
+                    "reasons" : [ "Something went wrong, please try again later." ]
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Unauthorized",
+                  "statusCode" : 401,
+                  "errors" : {
+                    "reasons" : [ "Please login and use provided tokens." ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/authentication/logout" : {
+      "get" : {
+        "tags" : [ "authentication" ],
+        "summary" : "Logs out the current user",
+        "description" : "- Authorization header: **yes**\n- Granted roles: \n  - All\n",
+        "operationId" : "logout",
+        "responses" : {
+          "204" : {
+            "description" : "NoContent\n"
           },
           "400" : {
             "description" : "Bad request\n",
@@ -1007,6 +1007,19 @@
           "schema" : {
             "type" : "boolean"
           }
+        }, {
+          "name" : "productIds",
+          "in" : "query",
+          "description" : "To filter the orders having their id matching one of this `set` of id.  \nRepeat this parameter to filter on multiple id.  \nDuplicates will be ignored.\n",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
         } ],
         "responses" : {
           "200" : {
@@ -1298,7 +1311,7 @@
         }, {
           "name" : "orderStates",
           "in" : "query",
-          "description" : "To filter the orders having their current state matching one of this `set` of states.  \nRepeat this parameter for multiple to filter on multiple states.  \nDuplicates will be ignored.  \nOne of:\n  - `0`: Idling,\n  - `1`: Acknowledged,\n  - `2`: InPreparation,\n  - `3`: Ready,\n  - `4`: Delivered,\n  - `5`: Other,\n  - `6`: Cancelled,\n  - `7`: Rejected\n",
+          "description" : "To filter the orders having their current state matching one of this `set` of states.  \nRepeat this parameter to filter on multiple states.  \nDuplicates will be ignored.  \nOne of:\n  - `0`: Idling,\n  - `1`: Acknowledged,\n  - `2`: InPreparation,\n  - `3`: Ready,\n  - `4`: Delivered,\n  - `5`: Other,\n  - `6`: Cancelled,\n  - `7`: Rejected\n",
           "required" : false,
           "style" : "form",
           "explode" : true,
