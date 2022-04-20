@@ -1010,7 +1010,7 @@
         }, {
           "name" : "productIds",
           "in" : "query",
-          "description" : "To filter the orders having their id matching one of this `set` of id.  \nRepeat this parameter to filter on multiple id.  \nDuplicates will be ignored.\n",
+          "description" : "To filter the products having the id matching one of this `set` of id.  \nRepeat this parameter to filter on multiple id.  \nDuplicates will be ignored.\n",
           "required" : false,
           "style" : "form",
           "explode" : true,
