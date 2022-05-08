@@ -1000,7 +1000,7 @@
         }, {
           "name" : "isAvailable",
           "in" : "query",
-          "description" : "To filter the restaurants that are available or not. Default null to get both. A product is available when isActive is true, quantity is null or > 1, expirationDateTime is null or in the future.",
+          "description" : "To filter the products that are available or not. Default null to get both. A product is available when isActive is true, quantity is null or > 1, expirationDateTime is null or in the future.",
           "required" : false,
           "style" : "form",
           "explode" : true,
@@ -2090,12 +2090,12 @@
             "description" : "The day to apply this opening time. Starting from Sunday: 0 to Saturday: 6, for example 4 is thursday.",
             "example" : 4
           },
-          "OffsetInMinutes" : {
+          "offsetInMinutes" : {
             "type" : "number",
-            "description" : "Number of minutes past from 00:00 for example 10:00 is 600, which means the restaurant is open since 10:00.",
+            "description" : "Number of minutes past from 00:00 for example 10:00 is 600, which means the restaurant is open since 10:00.  \n  `Warning`: Must be calculated from `UTC` time.\n",
             "example" : 600
           },
-          "DurationInMinutes" : {
+          "durationInMinutes" : {
             "type" : "number",
             "description" : "Number of minutes the restaurant is open since the offset, for example 120 minutes, which means the restaurant is open during 2h since 10:00.",
             "example" : 120
@@ -2118,12 +2118,12 @@
             "description" : "The day to apply this opening time. Starting from Sunday: 0 to Saturday: 6, for example 4 is thursday.",
             "example" : 4
           },
-          "OffsetInMinutes" : {
+          "offsetInMinutes" : {
             "type" : "number",
-            "description" : "Number of minutes past from 00:00 for example 10:00 is 600, which means the restaurant is open since 10:00.",
+            "description" : "Number of minutes past from 00:00 for example 10:00 is 600, which means the restaurant is open since 10:00.  \n  `Warning`: It's calculated from `UTC` time.\n",
             "example" : 600
           },
-          "DurationInMinutes" : {
+          "durationInMinutes" : {
             "type" : "number",
             "description" : "Number of minutes the restaurant is open since the offset, for example 120 minutes, which means the restaurant is open during 2h since 10:00.",
             "example" : 120
@@ -2362,13 +2362,11 @@
         "properties" : {
           "name" : {
             "type" : "string",
-            "description" : "Must be lowercase.",
-            "example" : "my product"
+            "example" : "My product"
           },
           "description" : {
             "type" : "string",
-            "description" : "Must be lowercase.",
-            "example" : "my ingredients"
+            "example" : "My first ingredient, my second ingredient"
           },
           "price" : {
             "type" : "number",
@@ -2641,16 +2639,16 @@
             "description" : "- `True` if the order is processed\n- `False` if the order is still processing\n",
             "example" : true
           },
-          "CurrentOrderStatus" : {
+          "currentOrderStatus" : {
             "$ref" : "#/components/schemas/OrderStatusReadDto"
           },
-          "OrderStatuses" : {
+          "orderStatuses" : {
             "type" : "array",
             "items" : {
               "$ref" : "#/components/schemas/OrderStatusReadDto"
             }
           },
-          "OrderedProducts" : {
+          "orderedProducts" : {
             "type" : "array",
             "items" : {
               "$ref" : "#/components/schemas/OrderedProductReadDto"
@@ -2659,17 +2657,17 @@
         }
       },
       "AddStatusToOrdersDto" : {
-        "required" : [ "OrderIds", "OrderState" ],
+        "required" : [ "orderIds", "orderState" ],
         "type" : "object",
         "properties" : {
-          "OrderIds" : {
+          "orderIds" : {
             "type" : "array",
             "example" : [ "a00000e0-aaa0-000a-0000-00e00aa00e00", "b11111f1-bbb1-111b-1111-11f11bb11f11" ],
             "items" : {
               "type" : "string"
             }
           },
-          "OrderState" : {
+          "orderState" : {
             "type" : "number",
             "description" : "One of:\n- `0`: Idling,\n- `1`: Acknowledged,\n- `2`: InPreparation,\n- `3`: Ready,\n- `4`: Delivered,\n- `5`: Other,\n- `6`: Cancelled,\n- `7`: Rejected\n",
             "example" : 1
