@@ -1,8 +1,8 @@
 {
   "openapi" : "3.0.0",
   "info" : {
-    "title" : "Simple Inventory API",
-    "description" : "This is a simple API",
+    "title" : "YLunch API",
+    "description" : "This is the API documentation of YLunch project for YDays projects of Sophia Ynov Campus",
     "contact" : {
       "email" : "rael.calitro@ynov.com"
     },
@@ -15,47 +15,1887 @@
   "servers" : [ {
     "url" : "https://virtserver.swaggerhub.com/rael06/ylunch-api/1.0.0",
     "description" : "SwaggerHub API Auto Mocking"
+  }, {
+    "url" : "https://ylunch-api.rael-calitro.ovh",
+    "description" : "Online server"
+  }, {
+    "url" : "http://localhost:5254",
+    "description" : "Local server"
+  } ],
+  "security" : [ {
+    "Bearer" : [ ]
   } ],
   "tags" : [ {
+    "name" : "trials",
+    "description" : "Operations available to try the api"
+  }, {
+    "name" : "authentication",
+    "description" : "authentication endpoints"
+  }, {
     "name" : "users",
     "description" : "users endpoints"
+  }, {
+    "name" : "restaurants",
+    "description" : "restaurants endpoints"
+  }, {
+    "name" : "products",
+    "description" : "products endpoints"
   } ],
   "paths" : {
-    "/users" : {
-      "post" : {
-        "tags" : [ "users" ],
-        "summary" : "Restaurant owner registration",
-        "operationId" : "addUser",
-        "parameters" : [ {
-          "name" : "type",
-          "in" : "query",
-          "description" : "One of `restaurantOwner`, `customer`, `superAdmin`",
-          "required" : true,
-          "style" : "form",
-          "explode" : true,
-          "schema" : {
-            "type" : "string"
+    "/trials/anonymous" : {
+      "get" : {
+        "tags" : [ "trials" ],
+        "summary" : "Tries the api as anonymous",
+        "description" : "- Authorization header: **no**\n",
+        "operationId" : "getAnonymousTry",
+        "responses" : {
+          "200" : {
+            "description" : "Success\n- The anonymous trial Json object\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "example" : {
+                  "message" : "YLunchApi is running, you are anonymous."
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "BadRequest",
+                  "statusCode" : 400,
+                  "errors" : {
+                    "reasons" : [ "Something went wrong, please try again later." ]
+                  }
+                }
+              }
+            }
           }
-        } ],
+        }
+      }
+    },
+    "/trials/authenticated" : {
+      "get" : {
+        "tags" : [ "trials" ],
+        "summary" : "Tries the api as authenticated based on accessToken in headers",
+        "description" : "- Authorization header: **yes**\n- Granted roles: \n  - All\n",
+        "operationId" : "getAuthenticatedTry",
+        "responses" : {
+          "200" : {
+            "description" : "Success\n- The authenticated trial Json object\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "example" : {
+                  "message" : "YLunchApi is running, you are authenticated as {CurrentUserEmail} with Id: {CurrentUserId} and Roles: {CurrentUserRoles}."
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "BadRequest",
+                  "statusCode" : 400,
+                  "errors" : {
+                    "reasons" : [ "Something went wrong, please try again later." ]
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Unauthorized",
+                  "statusCode" : 401,
+                  "errors" : {
+                    "reasons" : [ "Please login and use provided tokens." ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trials/authenticated-customer" : {
+      "get" : {
+        "tags" : [ "trials" ],
+        "summary" : "Tries the api as authenticated based on accessToken in headers",
+        "description" : "- Authorization header: **yes**\n- Granted roles: \n  - Customer\n",
+        "operationId" : "getAuthenticatedCustomerTry",
+        "responses" : {
+          "200" : {
+            "description" : "Success\n- The authenticated trial Json object\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "example" : {
+                  "message" : "YLunchApi is running, you are authenticated as {CurrentUserEmail} with Id: {CurrentUserId} and Roles: {CurrentUserRoles}."
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "BadRequest",
+                  "statusCode" : 400,
+                  "errors" : {
+                    "reasons" : [ "Something went wrong, please try again later." ]
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Unauthorized",
+                  "statusCode" : 401,
+                  "errors" : {
+                    "reasons" : [ "Please login and use provided tokens." ]
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Forbidden",
+                  "statusCode" : 403,
+                  "errors" : {
+                    "reasons" : [ "User has not granted roles." ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trials/authenticated-restaurant-admin" : {
+      "get" : {
+        "tags" : [ "trials" ],
+        "summary" : "Tries the api as authenticated based on accessToken in headers",
+        "description" : "- Authorization header: **yes**\n- Granted roles: \n  - RestaurantAdmin\n",
+        "operationId" : "getAuthenticatedRestaurantAdminTry",
+        "responses" : {
+          "200" : {
+            "description" : "Success\n- The authenticated trial Json object\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessageDto"
+                },
+                "example" : {
+                  "message" : "YLunchApi is running, you are authenticated as {CurrentUserEmail} with Id: {CurrentUserId} and Roles: {CurrentUserRoles}."
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "BadRequest",
+                  "statusCode" : 400,
+                  "errors" : {
+                    "reasons" : [ "Something went wrong, please try again later." ]
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Unauthorized",
+                  "statusCode" : 401,
+                  "errors" : {
+                    "reasons" : [ "Please login and use provided tokens." ]
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Forbidden",
+                  "statusCode" : 403,
+                  "errors" : {
+                    "reasons" : [ "User has not granted roles." ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/authentication/login" : {
+      "post" : {
+        "tags" : [ "authentication" ],
+        "summary" : "Login a user and returns access and refresh tokens as Json Web Token",
+        "description" : "- Authorization header: **no**\n",
+        "operationId" : "login",
         "requestBody" : {
-          "description" : "Restaurant owner to register",
+          "description" : "A JSON object that contains the user name and password",
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/RestaurantOwnerCreateDto"
+                "$ref" : "#/components/schemas/LoginRequestDto"
+              },
+              "examples" : {
+                "restaurantAdmin" : {
+                  "value" : {
+                    "email" : "admin@restaurant.com",
+                    "password" : "Password1234."
+                  }
+                },
+                "customer" : {
+                  "value" : {
+                    "email" : "anne-marie.martin@ynov.com",
+                    "password" : "Password1234."
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success\n- The access and refresh tokens\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TokenReadDto"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "examples" : {
+                  "ValidationError" : {
+                    "value" : {
+                      "title" : "One or more validation errors occurred.",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "Email" : [ "The Email field is required." ]
+                      }
+                    }
+                  },
+                  "Other" : {
+                    "value" : {
+                      "title" : "BadRequest",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "reasons" : [ "Something went wrong, please try again later." ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Unauthorized",
+                  "statusCode" : 401,
+                  "errors" : {
+                    "reasons" : [ "Please login and use provided tokens." ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/authentication/refresh-tokens" : {
+      "post" : {
+        "tags" : [ "authentication" ],
+        "summary" : "Refresh user's tokens and returns access and refresh tokens as Json Web Token",
+        "description" : "- Authorization header: **no**\n",
+        "operationId" : "refreshTokens",
+        "requestBody" : {
+          "description" : "A JSON object that contains the access and refresh tokens",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/TokenUpdateDto"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success\n- The new access and refresh tokens\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TokenReadDto"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "examples" : {
+                  "ValidationError" : {
+                    "value" : {
+                      "title" : "One or more validation errors occurred.",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "AccessToken" : [ "The AccessToken field is required." ]
+                      }
+                    }
+                  },
+                  "Other" : {
+                    "value" : {
+                      "title" : "BadRequest",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "reasons" : [ "Something went wrong, please try again later." ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Unauthorized",
+                  "statusCode" : 401,
+                  "errors" : {
+                    "reasons" : [ "Invalid tokens, please login to generate new valid tokens." ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/authentication/current-user" : {
+      "get" : {
+        "tags" : [ "authentication" ],
+        "summary" : "Gets the current user based on the access token in headers",
+        "description" : "- Authorization header: **yes**\n- Granted roles: \n  - All\n",
+        "operationId" : "getCurrentUser",
+        "responses" : {
+          "200" : {
+            "description" : "Success\n- The current user Json object\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UserReadDto"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "BadRequest",
+                  "statusCode" : 400,
+                  "errors" : {
+                    "reasons" : [ "Something went wrong, please try again later." ]
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Unauthorized",
+                  "statusCode" : 401,
+                  "errors" : {
+                    "reasons" : [ "Please login and use provided tokens." ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/authentication/logout" : {
+      "get" : {
+        "tags" : [ "authentication" ],
+        "summary" : "Logs out the current user",
+        "description" : "- Authorization header: **yes**\n- Granted roles: \n  - All\n",
+        "operationId" : "logout",
+        "responses" : {
+          "204" : {
+            "description" : "NoContent\n"
+          },
+          "400" : {
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "BadRequest",
+                  "statusCode" : 400,
+                  "errors" : {
+                    "reasons" : [ "Something went wrong, please try again later." ]
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Unauthorized",
+                  "statusCode" : 401,
+                  "errors" : {
+                    "reasons" : [ "Please login and use provided tokens." ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/restaurant-admins" : {
+      "post" : {
+        "tags" : [ "users" ],
+        "summary" : "Restaurant admin registration",
+        "description" : "- Authorization header: **no**\n",
+        "operationId" : "addRestaurantAdmin",
+        "requestBody" : {
+          "description" : "User to register",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/RestaurantAdminCreateDto"
               }
             }
           }
         },
         "responses" : {
           "201" : {
-            "description" : "restaurant owner created"
+            "description" : "user created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UserReadDto"
+                }
+              }
+            }
           },
           "400" : {
-            "description" : "invalid input, object invalid"
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "examples" : {
+                  "ValidationError" : {
+                    "value" : {
+                      "title" : "One or more validation errors occurred.",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "Name" : [ "The Name field is required." ]
+                      }
+                    }
+                  },
+                  "Other" : {
+                    "value" : {
+                      "title" : "BadRequest",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "reasons" : [ "Something went wrong, please try again later." ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "409" : {
-            "description" : "an existing item already exists"
+            "description" : "Conflict\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Conflict",
+                  "statusCode" : 409,
+                  "errors" : {
+                    "reasons" : [ "User already exists." ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customers" : {
+      "post" : {
+        "tags" : [ "users" ],
+        "summary" : "Customer registration",
+        "description" : "- Authorization header: **no**\n",
+        "operationId" : "addCustomer",
+        "requestBody" : {
+          "description" : "User to register",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CustomerCreateDto"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "user created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UserReadDto"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "examples" : {
+                  "ValidationError" : {
+                    "value" : {
+                      "title" : "One or more validation errors occurred.",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "Name" : [ "The Name field is required." ]
+                      }
+                    }
+                  },
+                  "Other" : {
+                    "value" : {
+                      "title" : "BadRequest",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "reasons" : [ "Something went wrong, please try again later." ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409" : {
+            "description" : "Conflict\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Conflict",
+                  "statusCode" : 409,
+                  "errors" : {
+                    "reasons" : [ "User already exists." ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/restaurants" : {
+      "get" : {
+        "tags" : [ "restaurants" ],
+        "summary" : "Gets restaurants ordered by creationDateTime",
+        "description" : "- Authorization header: **no**\n",
+        "operationId" : "getRestaurants",
+        "parameters" : [ {
+          "name" : "restaurantAdminId",
+          "in" : "query",
+          "description" : "To filter the restaurants that are related to the restaurantAdmin id. Default null to ignore this param and get all.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          }
+        }, {
+          "name" : "isPublished",
+          "in" : "query",
+          "description" : "To filter the restaurants that are published or not. Default null to get both.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "isCurrentlyOpenToOrder",
+          "in" : "query",
+          "description" : "To filter the restaurants that are currently open to order or not. Default null to get both.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "The page you want within 1 and 10 000. Default 1.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "size",
+          "in" : "query",
+          "description" : "The size you want within 1 and 30. Default 30.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "number"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success\n- The restaurants\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/RestaurantReadDto"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "BadRequest",
+                  "statusCode" : 400,
+                  "errors" : {
+                    "reasons" : [ "Something went wrong, please try again later." ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "restaurants" ],
+        "summary" : "Restaurant creation",
+        "description" : "- Authorization header: **yes**\n- Granted roles:\n  - RestaurantAdmin\n",
+        "operationId" : "addRestaurant",
+        "requestBody" : {
+          "description" : "Restaurant to create",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/RestaurantCreateDto"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "restaurant created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RestaurantReadDto"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "examples" : {
+                  "ValidationError" : {
+                    "value" : {
+                      "title" : "One or more validation errors occurred.",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "Name" : [ "The Name field is required." ]
+                      }
+                    }
+                  },
+                  "Other" : {
+                    "value" : {
+                      "title" : "BadRequest",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "reasons" : [ "Something went wrong, please try again later." ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409" : {
+            "description" : "Conflict\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Conflict",
+                  "statusCode" : 409,
+                  "errors" : {
+                    "reasons" : [ "Restaurant already exists." ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/restaurants/{restaurantId}" : {
+      "get" : {
+        "tags" : [ "restaurants" ],
+        "summary" : "Gets a restaurant by id",
+        "description" : "- Authorization header: **no**\n",
+        "operationId" : "getRestaurantById",
+        "parameters" : [ {
+          "name" : "restaurantId",
+          "in" : "path",
+          "description" : "The id of the restaurant you want to get",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success\n- The restaurant\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RestaurantReadDto"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "BadRequest",
+                  "statusCode" : 400,
+                  "errors" : {
+                    "reasons" : [ "Something went wrong, please try again later." ]
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Unauthorized",
+                  "statusCode" : 401,
+                  "errors" : {
+                    "reasons" : [ "Please login and use provided tokens." ]
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not found:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "NotFound",
+                  "statusCode" : 404,
+                  "errors" : {
+                    "reasons" : [ "Restaurant: a00000e0-aaa0-000a-0000-00e00aa00e00 not found." ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/restaurants/{restaurantId}/products" : {
+      "get" : {
+        "tags" : [ "products" ],
+        "summary" : "Gets products ordered by name",
+        "description" : "- Authorization header: **no**\n",
+        "operationId" : "getProducts",
+        "parameters" : [ {
+          "name" : "restaurantId",
+          "in" : "path",
+          "description" : "The id of the restaurant you want to get the products.",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "The page you want within 1 and 10 000. Default 1.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "size",
+          "in" : "query",
+          "description" : "The size you want within 1 and 250. Default 250.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "isAvailable",
+          "in" : "query",
+          "description" : "To filter the products that are available or not. Default null to get both. A product is available when isActive is true, quantity is null or > 1, expirationDateTime is null or in the future.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "productIds",
+          "in" : "query",
+          "description" : "To filter the products having the id matching one of this `set` of id.  \nRepeat this parameter to filter on multiple id.  \nDuplicates will be ignored.\n",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success\n- The products\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ProductReadDto"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "BadRequest",
+                  "statusCode" : 400,
+                  "errors" : {
+                    "reasons" : [ "Something went wrong, please try again later." ]
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not found:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "NotFound",
+                  "statusCode" : 404,
+                  "errors" : {
+                    "reasons" : [ "Restaurant: a00000e0-aaa0-000a-0000-00e00aa00e00 not found." ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "products" ],
+        "summary" : "Product creation",
+        "description" : "- Authorization header: **yes**\n- Granted roles:\n  - RestaurantAdmin\n",
+        "operationId" : "addProduct",
+        "parameters" : [ {
+          "name" : "restaurantId",
+          "in" : "path",
+          "description" : "The id of the restaurant in which you want to create a product",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Product to create",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ProductCreateDto"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "product created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProductReadDto"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "examples" : {
+                  "ValidationError" : {
+                    "value" : {
+                      "title" : "One or more validation errors occurred.",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "Name" : [ "The Name field is required." ]
+                      }
+                    }
+                  },
+                  "Other" : {
+                    "value" : {
+                      "title" : "BadRequest",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "reasons" : [ "Something went wrong, please try again later." ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not found:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "NotFound",
+                  "statusCode" : 404,
+                  "errors" : {
+                    "reasons" : [ "Restaurant: a00000e0-aaa0-000a-0000-00e00aa00e00 not found." ]
+                  }
+                }
+              }
+            }
+          },
+          "409" : {
+            "description" : "Conflict\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Conflict",
+                  "statusCode" : 409,
+                  "errors" : {
+                    "reasons" : [ "Product already exists." ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/{productId}" : {
+      "get" : {
+        "tags" : [ "products" ],
+        "summary" : "Gets a product by id",
+        "description" : "- Authorization header: **no**\n",
+        "operationId" : "getProductById",
+        "parameters" : [ {
+          "name" : "productId",
+          "in" : "path",
+          "description" : "The id of the product you want to get",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success\n- The product\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProductReadDto"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "BadRequest",
+                  "statusCode" : 400,
+                  "errors" : {
+                    "reasons" : [ "Something went wrong, please try again later." ]
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not found:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "NotFound",
+                  "statusCode" : 404,
+                  "errors" : {
+                    "reasons" : [ "Product: a00000e0-aaa0-000a-0000-00e00aa00e00 not found." ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/restaurants/{restaurantId}/orders" : {
+      "get" : {
+        "tags" : [ "orders" ],
+        "summary" : "Gets orders ordered by creationDateTime",
+        "description" : "- Authorization header: **yes**\n- Granted roles:\n  - RestaurantAdmin\n",
+        "operationId" : "getOrdersOfRestaurant",
+        "parameters" : [ {
+          "name" : "restaurantId",
+          "in" : "path",
+          "description" : "The id of the restaurant you want to get the orders.",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "customerId",
+          "in" : "query",
+          "description" : "The id of the customer you want to get the orders.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "The page you want within 1 and 10 000. Default 1.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "size",
+          "in" : "query",
+          "description" : "The size you want within 1 and 50. Default 50.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "minCreationDateTime",
+          "in" : "query",
+          "description" : "The minimum date of filtered orders creation date time.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "2021-12-31T00:00:00.000000"
+          }
+        }, {
+          "name" : "maxCreationDateTime",
+          "in" : "query",
+          "description" : "The maximum date of filtered orders creation date time.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "2021-12-31T00:00:00.000000"
+          }
+        }, {
+          "name" : "orderStates",
+          "in" : "query",
+          "description" : "To filter the orders having their current state matching one of this `set` of states.  \nRepeat this parameter to filter on multiple states.  \nDuplicates will be ignored.  \nOne of:\n  - `0`: Idling,\n  - `1`: Acknowledged,\n  - `2`: InPreparation,\n  - `3`: Ready,\n  - `4`: Delivered,\n  - `5`: Other,\n  - `6`: Cancelled,\n  - `7`: Rejected\n",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "number"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success\n- The orders\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/OrderReadDto"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "BadRequest",
+                  "statusCode" : 400,
+                  "errors" : {
+                    "reasons" : [ "Something went wrong, please try again later." ]
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Unauthorized",
+                  "statusCode" : 401,
+                  "errors" : {
+                    "reasons" : [ "Please login and use provided tokens." ]
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Forbidden",
+                  "statusCode" : 403,
+                  "errors" : {
+                    "reasons" : [ "User has not granted roles." ]
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not found:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "NotFound",
+                  "statusCode" : 404,
+                  "errors" : {
+                    "reasons" : [ "Restaurant: a00000e0-aaa0-000a-0000-00e00aa00e00 not found." ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "orders" ],
+        "summary" : "Order creation",
+        "description" : "- Authorization header: **yes**\n- Granted roles:\n  - Customer\n",
+        "operationId" : "addOrder",
+        "parameters" : [ {
+          "name" : "restaurantId",
+          "in" : "path",
+          "description" : "The id of the restaurant in where you want to order",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Order to create",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/OrderCreateDto"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "order created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OrderReadDto"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "examples" : {
+                  "ValidationError" : {
+                    "value" : {
+                      "title" : "One or more validation errors occurred.",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "ProductIds" : [ "The ProductIds field is required." ]
+                      }
+                    }
+                  },
+                  "Other" : {
+                    "value" : {
+                      "title" : "BadRequest",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "reasons" : [ "Something went wrong, please try again later." ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Unauthorized",
+                  "statusCode" : 401,
+                  "errors" : {
+                    "reasons" : [ "Please login and use provided tokens." ]
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Forbidden",
+                  "statusCode" : 403,
+                  "errors" : {
+                    "reasons" : [ "User has not granted roles." ]
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not found:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "examples" : {
+                  "RestaurantNotFound" : {
+                    "value" : {
+                      "title" : "NotFound",
+                      "statusCode" : 404,
+                      "errors" : {
+                        "reasons" : [ "Restaurant: a00000e0-aaa0-000a-0000-00e00aa00e00 not found." ]
+                      }
+                    }
+                  },
+                  "ProductsNotFound" : {
+                    "value" : {
+                      "title" : "NotFound",
+                      "statusCode" : 404,
+                      "errors" : {
+                        "reasons" : [ "Products: a00000e0-aaa0-000a-0000-00e00aa00e00 and b11111f1-bbb1-111b-1111-11f11bb11f11 not found." ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders" : {
+      "get" : {
+        "tags" : [ "orders" ],
+        "summary" : "Gets orders ordered by creationDateTime",
+        "description" : "- Authorization header: **yes**\n- Granted roles:\n  - Customer\n",
+        "operationId" : "getOrdersOfCurrentCustomer",
+        "parameters" : [ {
+          "name" : "restaurantId",
+          "in" : "query",
+          "description" : "The id of the restaurant you want to get the orders.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "The page you want within 1 and 10 000. Default 1.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "size",
+          "in" : "query",
+          "description" : "The size you want within 1 and 50. Default 50.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "minCreationDateTime",
+          "in" : "query",
+          "description" : "The minimum date of filtered orders creation date time.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "2021-12-31T00:00:00.000000"
+          }
+        }, {
+          "name" : "maxCreationDateTime",
+          "in" : "query",
+          "description" : "The maximum date of filtered orders creation date time.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "2021-12-31T00:00:00.000000"
+          }
+        }, {
+          "name" : "orderStates",
+          "in" : "query",
+          "description" : "To filter the orders having their current state matching one of this `set` of states.  \nRepeat this parameter for multiple to filter on multiple states.  \nDuplicates will be ignored.  \nOne of:\n  - `0`: Idling,\n  - `1`: Acknowledged,\n  - `2`: InPreparation,\n  - `3`: Ready,\n  - `4`: Delivered,\n  - `5`: Other,\n  - `6`: Cancelled,\n  - `7`: Rejected\n",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "number"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success\n- The orders\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/OrderReadDto"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "BadRequest",
+                  "statusCode" : 400,
+                  "errors" : {
+                    "reasons" : [ "Something went wrong, please try again later." ]
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Unauthorized",
+                  "statusCode" : 401,
+                  "errors" : {
+                    "reasons" : [ "Please login and use provided tokens." ]
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Forbidden",
+                  "statusCode" : 403,
+                  "errors" : {
+                    "reasons" : [ "User has not granted roles." ]
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not found:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "NotFound",
+                  "statusCode" : 404,
+                  "errors" : {
+                    "reasons" : [ "Restaurant: a00000e0-aaa0-000a-0000-00e00aa00e00 not found." ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders/{orderId}" : {
+      "get" : {
+        "tags" : [ "orders" ],
+        "summary" : "Gets an order by id",
+        "description" : "- Authorization header: **no**\n",
+        "operationId" : "getOrderById",
+        "parameters" : [ {
+          "name" : "orderId",
+          "in" : "path",
+          "description" : "The id of the order you want to get",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success\n- The order\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OrderReadDto"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "BadRequest",
+                  "statusCode" : 400,
+                  "errors" : {
+                    "reasons" : [ "Something went wrong, please try again later." ]
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not found:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "NotFound",
+                  "statusCode" : 404,
+                  "errors" : {
+                    "reasons" : [ "Order: a00000e0-aaa0-000a-0000-00e00aa00e00 not found." ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/restaurants/{restaurantId}/orders/statuses" : {
+      "post" : {
+        "tags" : [ "orders" ],
+        "summary" : "Add status to multiple orders",
+        "description" : "- Authorization header: **yes**\n- Granted roles:\n  - RestaurantAdmin\n",
+        "operationId" : "addStatusToOrders",
+        "parameters" : [ {
+          "name" : "restaurantId",
+          "in" : "path",
+          "description" : "The id of the restaurant to which belong the orders you want to add a status",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Array of id of orders plus the state you want to add to them",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/AddStatusToOrdersDto"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "updated orders with the new status as the current one",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/OrderReadDto"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "examples" : {
+                  "ValidationError" : {
+                    "value" : {
+                      "title" : "One or more validation errors occurred.",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "OrderIds" : [ "The OrderIds field is required." ]
+                      }
+                    }
+                  },
+                  "Other" : {
+                    "value" : {
+                      "title" : "BadRequest",
+                      "statusCode" : 400,
+                      "errors" : {
+                        "reasons" : [ "Something went wrong, please try again later." ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Unauthorized",
+                  "statusCode" : 401,
+                  "errors" : {
+                    "reasons" : [ "Please login and use provided tokens." ]
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "example" : {
+                  "title" : "Forbidden",
+                  "statusCode" : 403,
+                  "errors" : {
+                    "reasons" : [ "User has not granted roles." ]
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not found:\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorDto"
+                },
+                "examples" : {
+                  "RestaurantNotFound" : {
+                    "value" : {
+                      "title" : "NotFound",
+                      "statusCode" : 404,
+                      "errors" : {
+                        "reasons" : [ "Restaurant: a00000e0-aaa0-000a-0000-00e00aa00e00 not found." ]
+                      }
+                    }
+                  },
+                  "OrdersNotFound" : {
+                    "value" : {
+                      "title" : "NotFound",
+                      "statusCode" : 404,
+                      "errors" : {
+                        "reasons" : [ "Orders: a00000e0-aaa0-000a-0000-00e00aa00e00 and b11111f1-bbb1-111b-1111-11f11bb11f11 not found." ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -63,24 +1903,90 @@
   },
   "components" : {
     "schemas" : {
-      "RestaurantOwnerCreateDto" : {
-        "required" : [ "email", "firstname", "lastname", "password", "phone" ],
+      "MessageDto" : {
+        "properties" : {
+          "message" : {
+            "type" : "string",
+            "description" : "The message."
+          }
+        }
+      },
+      "ErrorDto" : {
+        "properties" : {
+          "title" : {
+            "type" : "string",
+            "description" : "The title."
+          },
+          "statusCode" : {
+            "type" : "number",
+            "description" : "The status code."
+          },
+          "errors" : {
+            "$ref" : "#/components/schemas/ErrorDto_errors"
+          }
+        }
+      },
+      "LoginRequestDto" : {
+        "required" : [ "email", "password" ],
         "type" : "object",
         "properties" : {
           "email" : {
             "type" : "string",
             "format" : "email",
-            "example" : "owner@restaurant.com"
+            "example" : "anne-marie.martin@ynov.com"
+          },
+          "password" : {
+            "type" : "string",
+            "example" : "Password1234."
+          }
+        }
+      },
+      "TokenReadDto" : {
+        "type" : "object",
+        "properties" : {
+          "accessToken" : {
+            "type" : "string",
+            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6ImFlNTcxOGJkLWY5NzktNDQ1Ni04MmRlLTBjNzgzMzk4NzYzNCIsImp0aSI6IjBjZjc3NGYwLTUxYWQtNDM4Yi1hNTZlLTI1N2VlZGRhMjQ0MCIsIm5iZiI6MTY0MTEzNzMxMCwiZXhwIjoxNjQxMTU4OTEwLCJpYXQiOjE2NDExMzczMTB9.q1VaAodjovu79AyBNbrSxu4yZ4vOlDZQF2IyDvcsbJM\n"
+          },
+          "refreshToken" : {
+            "type" : "string",
+            "example" : "abcdefghij-a00000e0-aaa0-000a-0000-00e00aa00e00"
+          }
+        }
+      },
+      "TokenUpdateDto" : {
+        "required" : [ "accessToken", "refreshToken" ],
+        "type" : "object",
+        "properties" : {
+          "accessToken" : {
+            "type" : "string",
+            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6ImFlNTcxOGJkLWY5NzktNDQ1Ni04MmRlLTBjNzgzMzk4NzYzNCIsImp0aSI6IjBjZjc3NGYwLTUxYWQtNDM4Yi1hNTZlLTI1N2VlZGRhMjQ0MCIsIm5iZiI6MTY0MTEzNzMxMCwiZXhwIjoxNjQxMTU4OTEwLCJpYXQiOjE2NDExMzczMTB9.q1VaAodjovu79AyBNbrSxu4yZ4vOlDZQF2IyDvcsbJM\n"
+          },
+          "refreshToken" : {
+            "type" : "string",
+            "example" : "abcdefghij-a00000e0-aaa0-000a-0000-00e00aa00e00"
+          }
+        }
+      },
+      "RestaurantAdminCreateDto" : {
+        "required" : [ "email", "firstname", "lastname", "password", "phoneNumber" ],
+        "type" : "object",
+        "properties" : {
+          "email" : {
+            "type" : "string",
+            "description" : "It should be lowercase email format and could contain '.', '-' and/or '_' characters.",
+            "format" : "email",
+            "example" : "admin@restaurant.com"
           },
           "firstname" : {
             "type" : "string",
-            "example" : "Jean"
+            "example" : "Jean-Marc"
           },
           "lastname" : {
             "type" : "string",
-            "example" : "Dupont"
+            "example" : "Dupont Henri"
           },
-          "phone" : {
+          "phoneNumber" : {
             "type" : "string",
             "format" : "phone",
             "example" : "0612345678"
@@ -91,6 +1997,701 @@
             "example" : "Password1234."
           }
         }
+      },
+      "CustomerCreateDto" : {
+        "required" : [ "email", "firstname", "lastname", "password", "phoneNumber" ],
+        "type" : "object",
+        "properties" : {
+          "email" : {
+            "type" : "string",
+            "description" : "It should be a lowercase Ynov email format and could contain '.', '-' and/or '_' characters.",
+            "format" : "email",
+            "example" : "anne-marie.martin@ynov.com"
+          },
+          "firstname" : {
+            "type" : "string",
+            "example" : "Anne-Marie"
+          },
+          "lastname" : {
+            "type" : "string",
+            "example" : "Martin-Jacques"
+          },
+          "phoneNumber" : {
+            "type" : "string",
+            "format" : "phone",
+            "example" : "0687654321"
+          },
+          "password" : {
+            "type" : "string",
+            "format" : "password",
+            "example" : "Password1234."
+          }
+        }
+      },
+      "UserReadDto" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "email" : {
+            "type" : "string",
+            "format" : "email",
+            "example" : "user@domain.com"
+          },
+          "firstname" : {
+            "type" : "string",
+            "example" : "Anne-Marie"
+          },
+          "lastname" : {
+            "type" : "string",
+            "example" : "Martin-Jacques"
+          },
+          "phoneNumber" : {
+            "type" : "string",
+            "format" : "phone",
+            "example" : "0687654321"
+          },
+          "roles" : {
+            "type" : "array",
+            "example" : [ "RestaurantAdmin" ],
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }
+      },
+      "ClosingDateCreateDto" : {
+        "required" : [ "closingDateTime" ],
+        "type" : "object",
+        "properties" : {
+          "closingDateTime" : {
+            "type" : "string",
+            "example" : "2021-12-31T00:00:00.000000"
+          }
+        }
+      },
+      "ClosingDateReadDto" : {
+        "type" : "object",
+        "properties" : {
+          "closingDateTime" : {
+            "type" : "string",
+            "example" : "2021-12-31T00:00:00.000000"
+          }
+        }
+      },
+      "OpeningTimeCreateDto" : {
+        "required" : [ "dayOfWeek", "durationInMinutes", "offsetInMinutes" ],
+        "type" : "object",
+        "properties" : {
+          "dayOfWeek" : {
+            "type" : "number",
+            "description" : "The day to apply this opening time. Starting from Sunday: 0 to Saturday: 6, for example 4 is thursday.",
+            "example" : 4
+          },
+          "offsetInMinutes" : {
+            "type" : "number",
+            "description" : "Number of minutes past from 00:00 for example 10:00 is 600, which means the restaurant is open since 10:00.  \n  `Warning`: Must be calculated from `UTC` time.\n",
+            "example" : 600
+          },
+          "durationInMinutes" : {
+            "type" : "number",
+            "description" : "Number of minutes the restaurant is open since the offset, for example 120 minutes, which means the restaurant is open during 2h since 10:00.",
+            "example" : 120
+          }
+        }
+      },
+      "OpeningTimeReadDto" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "restaurantId" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "dayOfWeek" : {
+            "type" : "number",
+            "description" : "The day to apply this opening time. Starting from Sunday: 0 to Saturday: 6, for example 4 is thursday.",
+            "example" : 4
+          },
+          "offsetInMinutes" : {
+            "type" : "number",
+            "description" : "Number of minutes past from 00:00 for example 10:00 is 600, which means the restaurant is open since 10:00.  \n  `Warning`: It's calculated from `UTC` time.\n",
+            "example" : 600
+          },
+          "durationInMinutes" : {
+            "type" : "number",
+            "description" : "Number of minutes the restaurant is open since the offset, for example 120 minutes, which means the restaurant is open during 2h since 10:00.",
+            "example" : 120
+          }
+        }
+      },
+      "RestaurantCreateDto" : {
+        "required" : [ "city", "country", "email", "isOpen", "isPublic", "name", "phoneNumber", "streetName", "streetNumber", "zipCode" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "example" : "my restaurant"
+          },
+          "phoneNumber" : {
+            "type" : "string",
+            "format" : "phone",
+            "example" : "0612345678"
+          },
+          "email" : {
+            "type" : "string",
+            "format" : "email",
+            "example" : "my.restaurant@restaurant.com"
+          },
+          "isOpen" : {
+            "type" : "boolean",
+            "description" : "Boolean to set manually if the restaurant is open or not:\n- `False`: the restaurant will be set as closed regardless of closing dates and opening times.\n- `True`: the restaurant will be set as open regarding closing dates and opening times.\n",
+            "example" : true
+          },
+          "isPublic" : {
+            "type" : "boolean",
+            "description" : "True if the restaurant wants to be visible for customers, actual visibility value is `isPublished` (refer to that field in `RestaurantReadDto`for details).",
+            "example" : true
+          },
+          "zipCode" : {
+            "type" : "string",
+            "example" : "06560"
+          },
+          "country" : {
+            "type" : "string",
+            "example" : "France"
+          },
+          "city" : {
+            "type" : "string",
+            "example" : "Valbonne"
+          },
+          "streetNumber" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "streetName" : {
+            "type" : "string",
+            "example" : "Place Sophie Lafitte"
+          },
+          "addressExtraInformation" : {
+            "type" : "string",
+            "example" : "Bât. G"
+          },
+          "closingDates" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ClosingDateCreateDto"
+            }
+          },
+          "placeOpeningTimes" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/OpeningTimeCreateDto"
+            }
+          },
+          "orderOpeningTimes" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/OpeningTimeCreateDto"
+            }
+          },
+          "base64Image" : {
+            "type" : "string",
+            "description" : "Base 64 encoded image",
+            "example" : "data:image/png;base64,iVBORw0KGgoAAA..."
+          },
+          "base64Logo" : {
+            "type" : "string",
+            "description" : "Base 64 encoded logo",
+            "example" : "data:image/png;base64,iVBORw0KGgoAAA..."
+          }
+        }
+      },
+      "RestaurantReadDto" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "my restaurant"
+          },
+          "phoneNumber" : {
+            "type" : "string",
+            "format" : "phone",
+            "example" : "0612345678"
+          },
+          "email" : {
+            "type" : "string",
+            "format" : "email",
+            "example" : "my.restaurant@restaurant.com"
+          },
+          "isOpen" : {
+            "type" : "boolean",
+            "description" : "Boolean to set manually if the restaurant is open or not:\n- `False`: the restaurant will be set as closed regardless of closing dates and opening times.\n- `True`: the restaurant will be set as open regarding closing dates and opening times.\n",
+            "example" : true
+          },
+          "isPublic" : {
+            "type" : "boolean",
+            "description" : "True if the restaurant wants to be visible for customers, actual display value is `isPublished` (refer to that field for details).",
+            "example" : true
+          },
+          "zipCode" : {
+            "type" : "string",
+            "example" : "06560"
+          },
+          "country" : {
+            "type" : "string",
+            "example" : "France"
+          },
+          "city" : {
+            "type" : "string",
+            "example" : "Valbonne"
+          },
+          "streetNumber" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "streetName" : {
+            "type" : "string",
+            "example" : "Place Sophie Lafitte"
+          },
+          "addressExtraInformation" : {
+            "type" : "string",
+            "example" : "Bât. G"
+          },
+          "closingDates" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ClosingDateReadDto"
+            }
+          },
+          "placeOpeningTimes" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/OpeningTimeReadDto"
+            }
+          },
+          "orderOpeningTimes" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/OpeningTimeReadDto"
+            }
+          },
+          "base64Image" : {
+            "type" : "string",
+            "description" : "Base 64 encoded image",
+            "example" : "data:image/png;base64,iVBORw0KGgoAAA..."
+          },
+          "base64Logo" : {
+            "type" : "string",
+            "description" : "Base 64 encoded logo",
+            "example" : "data:image/png;base64,iVBORw0KGgoAAA..."
+          },
+          "isPublished" : {
+            "type" : "boolean",
+            "description" : "This is true if the restaurant has a value for all the required fields of `RestaurantCreateDto` plus at least one opening time and one product which has isActive value set to true. If true, the restaurant is visible for customers",
+            "example" : true
+          },
+          "isCurrentlyOpenToOrder" : {
+            "type" : "boolean",
+            "description" : "True if the restaurant accepts orders."
+          },
+          "isCurrentlyOpenInPlace" : {
+            "type" : "boolean",
+            "description" : "True if the restaurant is open to eat in place."
+          }
+        }
+      },
+      "AllergenCreateDto" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "Must be lowercase.",
+            "example" : "gluten"
+          }
+        }
+      },
+      "AllergenReadDto" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "gluten"
+          }
+        }
+      },
+      "ProductTagCreateDto" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "Must be lowercase. A tag to categorise a product.",
+            "example" : "pizza"
+          }
+        }
+      },
+      "ProductTagReadDto" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "pizza"
+          }
+        }
+      },
+      "ProductCreateDto" : {
+        "required" : [ "allergens", "isActive", "name", "price", "productType" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "example" : "My product"
+          },
+          "description" : {
+            "type" : "string",
+            "example" : "My first ingredient, my second ingredient"
+          },
+          "price" : {
+            "type" : "number",
+            "example" : 9.8
+          },
+          "quantity" : {
+            "type" : "number",
+            "description" : "Must be between 1 and 10000 or `null` meaning infinite.",
+            "example" : 3
+          },
+          "isActive" : {
+            "type" : "boolean",
+            "description" : "- `True` if the product is available\n- `False` to force a product to be unavailable, bypasses the quantity'\n",
+            "example" : true
+          },
+          "productType" : {
+            "type" : "number",
+            "description" : "One of:\n- `0`: Starter,\n- `1`: Main,\n- `2`: Dessert,\n- `3`: Drink,\n- `4`: Menu,\n- `5`: Daily,\n- `6`: Other\n",
+            "example" : 0
+          },
+          "expirationDateTime" : {
+            "type" : "string",
+            "description" : "Must be in the future.",
+            "example" : "2021-12-31T00:00:00.000000"
+          },
+          "image" : {
+            "type" : "string",
+            "description" : "Base 64 encoded image",
+            "example" : "data:image/png;base64,iVBORw0KGgoAAA..."
+          },
+          "allergens" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/AllergenCreateDto"
+            }
+          },
+          "productTags" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ProductTagCreateDto"
+            }
+          }
+        }
+      },
+      "ProductReadDto" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "restaurantId" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "my product"
+          },
+          "description" : {
+            "type" : "string",
+            "example" : "my ingredients"
+          },
+          "price" : {
+            "type" : "number",
+            "example" : 9.8
+          },
+          "quantity" : {
+            "type" : "number",
+            "description" : "Quantity of product between 1 and 10000 or `null` meaning infinite.",
+            "example" : 3
+          },
+          "isActive" : {
+            "type" : "boolean",
+            "description" : "- `True` if the product is available\n- `False` if the product is unavailable, bypasses the quantity'\n",
+            "example" : true
+          },
+          "productType" : {
+            "type" : "number",
+            "description" : "One of:\n- `0`: Starter,\n- `1`: Main,\n- `2`: Dessert,\n- `3`: Drink,\n- `4`: Menu,\n- `5`: Daily,\n- `6`: Other\n",
+            "example" : 0
+          },
+          "creationDateTime" : {
+            "type" : "string",
+            "example" : "2021-12-31T00:00:00.000000"
+          },
+          "expirationDateTime" : {
+            "type" : "string",
+            "example" : "2021-12-31T00:00:00.000000"
+          },
+          "image" : {
+            "type" : "string",
+            "description" : "Base 64 encoded image",
+            "example" : "data:image/png;base64,iVBORw0KGgoAAA..."
+          },
+          "allergens" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/AllergenReadDto"
+            }
+          },
+          "productTags" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ProductTagReadDto"
+            }
+          }
+        }
+      },
+      "OrderedProductReadDto" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "productId" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "restaurantId" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "orderId" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "userId" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "my product"
+          },
+          "description" : {
+            "type" : "string",
+            "example" : "my ingredients"
+          },
+          "allergens" : {
+            "type" : "string",
+            "description" : "ordered by name",
+            "example" : "arachide, gluten"
+          },
+          "productTags" : {
+            "type" : "string",
+            "description" : "ordered by name",
+            "example" : "italienne, pizza"
+          },
+          "price" : {
+            "type" : "number",
+            "example" : 9.8
+          },
+          "productType" : {
+            "type" : "number",
+            "description" : "One of:\n- `0`: Starter,\n- `1`: Main,\n- `2`: Dessert,\n- `3`: Drink,\n- `4`: Menu,\n- `5`: Daily,\n- `6`: Other\n",
+            "example" : 0
+          },
+          "creationDateTime" : {
+            "type" : "string",
+            "example" : "2021-12-31T00:00:00.000000"
+          },
+          "expirationDateTime" : {
+            "type" : "string",
+            "example" : "2021-12-31T00:00:00.000000"
+          },
+          "image" : {
+            "type" : "string",
+            "description" : "Base 64 encoded image",
+            "example" : "data:image/png;base64,iVBORw0KGgoAAA..."
+          }
+        }
+      },
+      "OrderStatusReadDto" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "orderId" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "orderState" : {
+            "type" : "number",
+            "description" : "One of:\n- `0`: Idling,\n- `1`: Acknowledged,\n- `2`: InPreparation,\n- `3`: Ready,\n- `4`: Delivered,\n- `5`: Other,\n- `6`: Cancelled,\n- `7`: Rejected\n",
+            "example" : 0
+          },
+          "dateTime" : {
+            "type" : "string",
+            "example" : "2021-12-31T00:00:00.000000"
+          }
+        }
+      },
+      "OrderCreateDto" : {
+        "required" : [ "productIds", "reservedForDateTime" ],
+        "type" : "object",
+        "properties" : {
+          "productIds" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+            }
+          },
+          "reservedForDateTime" : {
+            "type" : "string",
+            "description" : "Must be in future and within restaurant place opening times",
+            "example" : "2021-12-31T00:00:00.000000"
+          },
+          "customerComment" : {
+            "type" : "string",
+            "example" : "without onions"
+          }
+        }
+      },
+      "OrderReadDto" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "userId" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "restaurantId" : {
+            "type" : "string",
+            "example" : "a00000e0-aaa0-000a-0000-00e00aa00e00"
+          },
+          "totalPrice" : {
+            "type" : "number",
+            "example" : 19.6
+          },
+          "creationDateTime" : {
+            "type" : "string",
+            "example" : "2021-12-31T00:00:00.000000"
+          },
+          "reservedForDateTime" : {
+            "type" : "string",
+            "example" : "2021-12-31T00:00:00.000000"
+          },
+          "acceptationDateTime" : {
+            "type" : "string",
+            "example" : "2021-12-31T00:00:00.000000"
+          },
+          "customerComment" : {
+            "type" : "string",
+            "example" : "without onions"
+          },
+          "restaurantComment" : {
+            "type" : "string",
+            "example" : "ok, we remove onions"
+          },
+          "isAcknowledged" : {
+            "type" : "boolean",
+            "description" : "- `True` if the restaurant is aware of the order\n- `False` if the restaurant is not aware of the order\n",
+            "example" : true
+          },
+          "isAccepted" : {
+            "type" : "boolean",
+            "description" : "- `True` if the restaurant has accepted the order\n- `False` if the restaurant has not accepted the order\n",
+            "example" : true
+          },
+          "isDeleted" : {
+            "type" : "boolean",
+            "description" : "- `True` if the order is processed\n- `False` if the order is still processing\n",
+            "example" : true
+          },
+          "currentOrderStatus" : {
+            "$ref" : "#/components/schemas/OrderStatusReadDto"
+          },
+          "orderStatuses" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/OrderStatusReadDto"
+            }
+          },
+          "orderedProducts" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/OrderedProductReadDto"
+            }
+          }
+        }
+      },
+      "AddStatusToOrdersDto" : {
+        "required" : [ "orderIds", "orderState" ],
+        "type" : "object",
+        "properties" : {
+          "orderIds" : {
+            "type" : "array",
+            "example" : [ "a00000e0-aaa0-000a-0000-00e00aa00e00", "b11111f1-bbb1-111b-1111-11f11bb11f11" ],
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "orderState" : {
+            "type" : "number",
+            "description" : "One of:\n- `0`: Idling,\n- `1`: Acknowledged,\n- `2`: InPreparation,\n- `3`: Ready,\n- `4`: Delivered,\n- `5`: Other,\n- `6`: Cancelled,\n- `7`: Rejected\n",
+            "example" : 1
+          }
+        }
+      },
+      "ErrorDto_errors" : {
+        "properties" : {
+          "reasons" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "description" : "The reason."
+            }
+          }
+        },
+        "example" : null
+      }
+    },
+    "securitySchemes" : {
+      "Bearer" : {
+        "type" : "http",
+        "description" : "JWT Authorization header using the Bearer scheme. Example: 'Authorization: Bearer {token}'.\n",
+        "scheme" : "bearer"
       }
     }
   }
