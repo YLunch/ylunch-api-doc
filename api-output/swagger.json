@@ -1,8 +1,8 @@
 {
   "openapi" : "3.0.0",
   "info" : {
-    "title" : "Simple Inventory API",
-    "description" : "This is a simple API",
+    "title" : "YLunch API",
+    "description" : "This is the API documentation of YLunch project for YDays projects of Sophia Ynov Campus",
     "contact" : {
       "email" : "rael.calitro@ynov.com"
     },
@@ -1765,7 +1765,7 @@
     "/restaurants/{restaurantId}/orders/statuses" : {
       "post" : {
         "tags" : [ "orders" ],
-        "summary" : "Add status to multiple ordeers",
+        "summary" : "Add status to multiple orders",
         "description" : "- Authorization header: **yes**\n- Granted roles:\n  - RestaurantAdmin\n",
         "operationId" : "addStatusToOrders",
         "parameters" : [ {
@@ -2576,7 +2576,7 @@
           },
           "reservedForDateTime" : {
             "type" : "string",
-            "description" : "Must be in future and within restaurant order opening times",
+            "description" : "Must be in future and within restaurant place opening times",
             "example" : "2021-12-31T00:00:00.000000"
           },
           "customerComment" : {
